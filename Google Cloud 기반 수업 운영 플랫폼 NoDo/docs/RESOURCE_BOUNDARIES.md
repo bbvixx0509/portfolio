@@ -5,10 +5,10 @@
 | 구분 | NoDo가 관리하는 자원 | NoDo 접근 금지 자원 |
 | --- | --- | --- |
 | Firebase Web App | NoDo Web Dev | 다른 서비스 Web App |
-| Firestore 데이터베이스 | `(default)` | `jimingu4043` |
-| Firestore 데이터 | `organizations/{orgId}` 및 `organizations/demo/courses/{courseId}` | `demo_jimingu4043_internal` |
-| Storage | 향후 `example-gcp-project-nodo-materials` | `example-gcp-project-jimingu4043-materials` 및 `lectures/{강의ID}/materials/...` |
-| 서버·작업·서비스 계정 | 향후 `nodo-*` | `jimingu4043-*` |
+| Firestore 데이터베이스 | `(default)` | `other-service` |
+| Firestore 데이터 | `organizations/{orgId}` 및 `organizations/demo/courses/{courseId}` | `demo_other-service_internal` |
+| Storage | 향후 `example-gcp-project-nodo-materials` | `example-gcp-project-other-service-materials` 및 `lectures/{강의ID}/materials/...` |
+| 서버·작업·서비스 계정 | 향후 `nodo-*` | `other-service-*` |
 
 Firestore **데이터베이스 ID가 주요 분리 경계**입니다. `(default)` 안에서는 NoDo가 `organizations/{orgId}`를 자기 서비스 데이터의 시작점으로 사용합니다. 컬렉션 이름은 데이터 정리 단위일 뿐, 다른 Firestore 데이터베이스를 대신하는 보안 경계가 아닙니다. NoDo는 `(default)`의 기존 `organizations/demo`, 사용자, 초대, 역할, 감사 로그와 수업 흐름을 이동·삭제하지 않습니다.
 
