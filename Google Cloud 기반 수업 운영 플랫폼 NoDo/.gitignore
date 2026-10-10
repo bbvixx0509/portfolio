@@ -1,0 +1,52 @@
+# Frontend dependencies and build output
+web/node_modules/
+web/dist/
+dist/
+**/dist/
+
+# Root Firebase CLI dependencies and Emulator output
+/node_modules/
+.firebase/
+.firebase-data/
+firebase-export/
+emulator-data/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+*-debug.log*
+
+# Python virtual environments and caches
+backend/.venv/
+backend/venv/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.vitest/
+**/.vitest/
+
+# Local environment files and secrets
+.env
+.env.local
+.env.*.local
+.env.*
+!.env.example
+!.env.*.example
+
+# Test and coverage output
+coverage/
+htmlcov/
+logs/
+**/logs/
+
+# Service-account credentials
+service-account*.json
+*service-account*.json
+firebase-adminsdk-*.json
+
+# Editor and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

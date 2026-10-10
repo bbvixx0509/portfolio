@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "푸디가드",
+    "slug": "foodiguard-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.foodiguard.mobile"
+    },
+    "ios": {
+      "bundleIdentifier": "com.foodiguard.mobile"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}

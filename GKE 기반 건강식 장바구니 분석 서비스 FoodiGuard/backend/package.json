@@ -1,0 +1,24 @@
+{
+  "name": "foodiguard-api",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "db:migrate": "node scripts/migrate.js",
+    "db:seed-demo": "node scripts/seed-demo.js",
+    "db:verify-migration": "node scripts/verify-irb-migration.js",
+    "db:recalc-allergens": "node scripts/recalculate-allergens.js",
+    "test": "node --test --test-concurrency=1 --test-timeout=60000 \"server/**/*.test.js\"",
+    "consents:print": "node scripts/print-consent-documents.js"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.4",
+    "@google/genai": "^2.7.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.13.1",
+    "prom-client": "^15.1.3"
+  }
+}

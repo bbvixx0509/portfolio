@@ -1,0 +1,56 @@
+.backdrop {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgb(20 35 53 / 52%);
+}
+
+.dialog {
+  width: min(100%, 35rem);
+  max-block-size: min(44rem, calc(100dvh - 36px));
+  overflow-y: auto;
+  padding: clamp(20px, 4vw, 28px);
+  border: 1px solid #c7dce0;
+  border-radius: 18px;
+  background: #fbffff;
+  box-shadow: 0 22px 54px rgb(13 31 52 / 30%);
+  color: #213b59;
+}
+
+.dialog header > p {
+  margin: 0 0 6px;
+  color: #293b91;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .14em;
+}
+
+.dialog h2 { margin: 0; font-size: clamp(22px, 4vw, 29px); letter-spacing: -.045em; line-height: 1.18; }
+.dialog header > span { display: block; margin-top: 8px; color: #62758a; font-size: 13px; line-height: 1.55; }
+.dialog form { display: grid; gap: 12px; margin-top: 20px; }
+.dialog fieldset { display: grid; gap: 7px; margin: 0; padding: 0; border: 0; }
+.dialog legend { margin-bottom: 6px; color: #4e6479; font-size: 12px; font-weight: 900; }
+.option { display: grid; grid-template-columns: 18px minmax(0, 1fr); align-items: center; gap: 11px; min-height: 50px; padding: 10px 13px; border: 1px solid #c6dbdf; border-radius: 11px; background: #fff; color: #263f5d; font-size: 14px; font-weight: 800; line-height: 1.38; cursor: pointer; transition: border-color .16s ease, background-color .16s ease, box-shadow .16s ease; }
+.option:hover { border-color: #9ebac6; background: #fbffff; }
+.option:has(input:checked) { border-color: #293b91; background: #f0f4ff; box-shadow: inset 3px 0 0 #293b91; }
+.option input { inline-size: 18px; block-size: 18px; margin: 0; accent-color: #293b91; }
+.option > span { min-width: 0; }
+.customInput { display: grid; gap: 6px; padding-top: 2px; color: #4e6479; font-size: 12px; font-weight: 900; }
+.customInput input { min-height: 42px; padding: 0 10px; border: 1px solid #a9c4ca; border-radius: 9px; background: #fff; color: #243d5b; font: inherit; }
+.customInput small { color: #687b8d; font-size: 11px; font-weight: 700; }
+.description { margin: 0; padding: 10px 12px; border-left: 3px solid #293b91; background: #eef5ff; color: #38526d; font-size: 13px; font-weight: 700; line-height: 1.55; }
+.error { margin: 0; padding: 10px 12px; border-radius: 10px; background: #fff1f1; color: #a2313a; font-size: 13px; font-weight: 800; }
+.dialog footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; padding-top: 2px; }
+.dialog button { min-height: 40px; padding: 0 14px; border: 1px solid #a8c2c8; border-radius: 10px; background: #fff; color: #29405d; font: inherit; font-size: 13px; font-weight: 850; cursor: pointer; }
+.dialog .endButton { border-color: #293b91; background: #293b91; color: #fff; }
+.dialog button:disabled { cursor: not-allowed; opacity: .58; }
+.dialog button:focus-visible, .customInput input:focus-visible { outline: 3px solid rgb(41 59 145 / 30%); outline-offset: 2px; }
+
+@media (max-width: 480px) {
+  .backdrop { align-items: end; padding: 10px; }
+  .dialog { max-block-size: calc(100dvh - 20px); border-radius: 18px; }
+  .dialog footer { display: grid; grid-template-columns: 1fr 1fr; }
+}

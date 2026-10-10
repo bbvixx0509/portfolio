@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nodo-backend"
+version = "0.0.0"
+description = "NoDo FastAPI base application"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi==0.139.0",
+  "firebase-admin==7.5.0",
+  "pypdf==5.1.0",
+  "uvicorn[standard]==0.51.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx==0.28.1",
+  "pytest==9.1.1",
+  "ruff==0.15.21",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+markers = [
+  "emulator_concurrency: room creation concurrency tests against Firebase Emulator",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

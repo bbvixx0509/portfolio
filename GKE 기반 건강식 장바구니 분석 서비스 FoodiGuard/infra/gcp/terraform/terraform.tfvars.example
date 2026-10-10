@@ -1,0 +1,31 @@
+project_id     = "foodigard"
+project_number = "578921433841"
+region         = "asia-northeast3"
+zone           = "asia-northeast3-a"
+
+artifact_registry_repository = "foodiguard-api"
+
+gke_cluster_name = "foodiguard-cluster"
+
+# 기존 Cloud SQL 인스턴스와 앱 DB를 import한 후에만 plan/apply한다.
+create_cloud_sql        = true
+cloud_sql_instance_name = "foodiguard-db"
+
+# 로컬 개발 DB 가 PostgreSQL 17 이라 버전을 맞춘다. pg_dump 17 산출물은
+# 16 서버에 복원되지 않는다. PostgreSQL 은 공유코어(db-f1-micro/db-g1-small)
+# 또는 db-custom-<vCPU>-<RAM_MB> 만 받는다. db-n1-* 는 MySQL 전용이다.
+cloud_sql_database_version = "POSTGRES_17"
+cloud_sql_edition          = "ENTERPRISE"
+cloud_sql_tier             = "db-custom-1-3840"
+
+# 기존 Jenkins VM과 IAM을 함께 관리한다. SSH/8080은 IAP로만 접근한다.
+create_jenkins                = true
+jenkins_instance_name         = "jenkins-vm"
+jenkins_static_ip_name        = "jenkins-static-ip"
+jenkins_firewall_rule_name    = "allow-jenkins-iap"
+jenkins_service_account_id    = "foodiguard-jenkins"
+jenkins_admin_user_email      = "rudans0601@gmail.com"
+
+# Enable after DB restore and API/Web health verification.
+alerts_enabled = false
+create_application_alerts = false

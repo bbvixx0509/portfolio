@@ -1,11 +1,23 @@
 # 개발 포트폴리오
 
 직접 구현하고 분석한 프로젝트를 정리한 개발 포트폴리오 저장소입니다.  
-웹 애플리케이션, 콘솔 프로그램, 데이터 분석, 머신러닝, 자동화 프로젝트를 중심으로 구성했습니다.
+클라우드 인프라와 운영(GKE, Cloud Run, Terraform, 모니터링)을 다룬 프로젝트를 중심으로, 웹 애플리케이션, AI 에이전트, 콘솔 프로그램, 데이터 분석, 자동화 프로젝트를 함께 정리했습니다.
 
 단순히 코드만 모아둔 저장소가 아니라, 각 프로젝트에서 어떤 문제를 다루었고 어떤 방식으로 구현했는지 바로 확인할 수 있도록 프로젝트별 README와 화면 예시를 함께 정리했습니다.
 
 ## 대표 프로젝트
+
+### [GKE 기반 건강식 장바구니 분석 서비스 FoodiGuard](./GKE%20기반%20건강식%20장바구니%20분석%20서비스%20FoodiGuard)
+식품 79,041건을 기반으로 영양·원재료·알레르기 분석과 대체식품 추천을 제공하는 모바일 서비스를 GKE와 Cloud SQL에 배포한 클라우드 캡스톤 프로젝트입니다.  
+Jenkins CI/CD, Terraform, Managed Prometheus 알림을 갖추고, 부하 테스트와 장애 실험으로 DB 병목을 찾아 검색 응답을 약 15배 개선한 과정까지 담았습니다.
+
+### [Google Cloud 기반 수업 운영 플랫폼 NoDo](./Google%20Cloud%20기반%20수업%20운영%20플랫폼%20NoDo)
+React → FastAPI(Cloud Run) → Firestore·Cloud Storage·Vertex AI 구조로 만든 AI 수업 로드맵·실시간 강의 운영 플랫폼입니다.  
+권한, 개인정보, 용량 예약, 데이터 수명주기를 서버에서 일관되게 처리하도록 설계한 Google Cloud 산학 프로젝트입니다.
+
+### [LangGraph 기반 식단 추천 AI 에이전트](./LangGraph%20기반%20식단%20추천%20AI%20에이전트)
+LangGraph와 Gemini로 자연어 식단 요청을 해석하고, 약 4만 건의 식품 데이터에서 Python 로직으로 후보를 계산해 추천 근거와 함께 보여주는 AI 에이전트입니다.  
+이후 FoodiGuard 클라우드 서비스로 확장된 출발점이 된 프로젝트입니다.
 
 ### [JSP 기반 웹 애플리케이션](./JSP%20기반%20웹%20애플리케이션)
 회원가입, 로그인, 회원 목록 조회, 삭제, 로그아웃까지 이어지는 기본 회원 관리 흐름을 JSP와 Bootstrap으로 직접 구현한 웹 프로젝트입니다.  
@@ -21,6 +33,9 @@
 
 ## 프로젝트 구성
 
+- [GKE 기반 건강식 장바구니 분석 서비스 FoodiGuard](./GKE%20기반%20건강식%20장바구니%20분석%20서비스%20FoodiGuard): GKE, Cloud SQL, Jenkins, Terraform, Prometheus로 배포·운영한 클라우드 캡스톤 프로젝트입니다.
+- [Google Cloud 기반 수업 운영 플랫폼 NoDo](./Google%20Cloud%20기반%20수업%20운영%20플랫폼%20NoDo): Cloud Run, Firestore, Cloud Storage, Vertex AI를 사용한 서버리스 수업 운영 플랫폼입니다.
+- [LangGraph 기반 식단 추천 AI 에이전트](./LangGraph%20기반%20식단%20추천%20AI%20에이전트): LangChain, LangGraph, Gemini로 구현한 개인 맞춤 식단 추천 에이전트입니다.
 - [C 개발 프로젝트](./C%20개발%20프로젝트): 콘솔 환경에서 동작하는 C, C++ 프로그램을 모아둔 폴더입니다.
 - [자료구조와 알고리즘 구현](./자료구조와%20알고리즘%20구현): 연결 리스트, 큐, 힙, DFS, BFS를 직접 구현한 코드 모음입니다.
 - [JSP 기반 웹 애플리케이션](./JSP%20기반%20웹%20애플리케이션): 회원 관리 흐름을 중심으로 구성한 JSP 웹 프로젝트입니다.
@@ -31,16 +46,23 @@
 
 ## 추천해서 보는 순서
 
-1. `JSP 기반 웹 애플리케이션`
-2. `C 개발 프로젝트`
-3. `날씨 기반 지하철 혼잡도 분석`
-4. `개인 학습 관리 자동화 플러그인`
-5. `LLM 기반 가짜뉴스 판독기`
-6. `머신러닝 포트폴리오`
-7. `자료구조와 알고리즘 구현`
+1. `GKE 기반 건강식 장바구니 분석 서비스 FoodiGuard`
+2. `Google Cloud 기반 수업 운영 플랫폼 NoDo`
+3. `LangGraph 기반 식단 추천 AI 에이전트`
+4. `JSP 기반 웹 애플리케이션`
+5. `C 개발 프로젝트`
+6. `날씨 기반 지하철 혼잡도 분석`
+7. `개인 학습 관리 자동화 플러그인`
+8. `LLM 기반 가짜뉴스 판독기`
+9. `머신러닝 포트폴리오`
+10. `자료구조와 알고리즘 구현`
 
 ## 사용 기술
 
+- 클라우드: `GCP (GKE, Cloud Run, Cloud SQL, Firestore, Cloud Storage, Vertex AI)`, `AWS Bedrock`
+- 인프라·운영: `Docker`, `Kubernetes`, `Terraform`, `Jenkins`, `Prometheus`
+- 웹·앱: `React`, `React Native (Expo)`, `TypeScript`, `Node.js (Express)`, `FastAPI`, `PostgreSQL`
+- AI: `LangChain`, `LangGraph`, `Gemini`
 - `C`, `C++`
 - `Java`, `JSP`
 - `Python`, `Jupyter Notebook`
@@ -52,3 +74,4 @@
 - 각 프로젝트 README에는 프로젝트 목적, 핵심 기능, 확인하면 좋은 파일, 실행 화면 또는 결과 예시를 함께 넣었습니다.
 - 읽는 사람이 파일 구조에 먼저 막히지 않도록 폴더 이름과 프로젝트 설명을 한국어 중심으로 정리했습니다.
 - 빌드 결과물, 개인 메모, 원본 발표 자료처럼 GitHub에서 바로 볼 필요가 없는 파일은 `.gitignore`로 제외했습니다.
+- 팀 프로젝트는 각 README에 `내가 맡은 역할`을 따로 적었고, 실제 클라우드 프로젝트 ID·외부 IP·API 키처럼 공개되면 안 되는 값은 예시 값으로 바꾸거나 제외했습니다.

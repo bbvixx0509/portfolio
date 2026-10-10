@@ -1,0 +1,21 @@
+# Google Managed Service for Prometheus 수집 설정.
+#
+# Autopilot 1.25 이상은 관리형 수집이 기본으로 켜져 있지만, /metrics 가 있다고 해서
+# 저절로 긁어가지는 않는다. 무엇을 어느 주기로 가져갈지는 이 PodMonitoring 이 정한다.
+# https://docs.cloud.google.com/stackdriver/docs/managed-prometheus/setup-managed
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  name: foodiguard-api
+  labels:
+    app: foodiguard-api
+spec:
+  selector:
+    matchLabels:
+      app: foodiguard-api
+      component: api
+  endpoints:
+    # 포트는 번호가 아니라 컨테이너 포트 이름으로 가리킨다(backend-deployment.yaml 의 name: http).
+    - port: http
+      path: /metrics
+      interval: 30s

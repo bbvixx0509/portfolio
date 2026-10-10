@@ -1,0 +1,124 @@
+.card {
+  position: relative;
+  min-width: 0;
+  min-height: 18.75rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.65rem 1.5rem 1.5rem;
+  border: 1px solid var(--nodo-border);
+  border-radius: 1.35rem;
+  background: var(--nodo-card);
+  box-shadow: var(--nodo-shadow);
+}
+
+.recommended {
+  border-color: var(--nodo-primary);
+  background: var(--nodo-card-recommended);
+}
+
+.recommendBadge {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: var(--nodo-primary);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  transform: translateX(-50%);
+}
+
+.iconWrap {
+  width: 3.25rem;
+  height: 3.25rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 1rem;
+  background: var(--nodo-icon-bg);
+  color: var(--nodo-primary);
+}
+
+.title {
+  margin: 1.15rem 0 0;
+  color: var(--nodo-text);
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.description {
+  margin: 0.65rem 0 0;
+  color: var(--nodo-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.85rem 0 1.2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.badges li,
+.supportingLabel {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--nodo-border-strong);
+  border-radius: 999px;
+  color: var(--nodo-muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.supportingLabel {
+  align-self: flex-start;
+  margin: 0.85rem 0 1.2rem;
+  font-family: inherit;
+  letter-spacing: 0;
+}
+
+.action {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--nodo-border-strong);
+  border-radius: 999px;
+  color: var(--nodo-text);
+  font-size: 0.92rem;
+  font-weight: 750;
+  text-align: center;
+  text-decoration: none;
+}
+
+.primaryAction {
+  border-color: var(--nodo-primary);
+  background: var(--nodo-primary);
+  color: #ffffff;
+}
+
+.action:hover {
+  border-color: var(--nodo-primary);
+}
+
+.primaryAction:hover {
+  background: var(--nodo-primary-hover);
+}
+
+@media (max-width: 40rem) {
+  .card {
+    min-height: 0;
+  }
+
+  .action {
+    margin-top: 1.5rem;
+  }
+}

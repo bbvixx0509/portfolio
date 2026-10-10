@@ -1,0 +1,49 @@
+rules_version = '2';
+
+// NoDo production policy for the explicitly selected (default) database.
+// FastAPI is the only writer for NoDo service data.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function currentUserPath() {
+      return /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    function isNoDoStaff(orgId) {
+      return isSignedIn()
+        && orgId == 'demo'
+        && exists(currentUserPath())
+        && get(currentUserPath()).data.uid == request.auth.uid
+        && get(currentUserPath()).data.orgId == orgId
+        && get(currentUserPath()).data.accountType == 'STAFF'
+        && get(currentUserPath()).data.isAnonymous == false
+        && (
+          get(currentUserPath()).data.organizationRole == 'ADMIN'
+          || get(currentUserPath()).data.organizationRole == 'INSTRUCTOR'
+        );
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn() && request.auth.uid == userId;
+      allow list, create, update, delete: if false;
+    }
+
+    match /organizations/{orgId} {
+      allow get: if isNoDoStaff(orgId);
+      allow list, create, update, delete: if false;
+
+      // Organization data, courses, invitations and audit logs are server-only.
+      match /{document=**} {
+        allow read, write: if false;
+      }
+    }
+
+    // Every path outside NoDo's organization root is denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

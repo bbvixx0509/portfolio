@@ -1,0 +1,138 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foodiguard-api
+  labels:
+    app: foodiguard-api
+spec:
+  # HPA owns replicas; never reset its desired count on Jenkins deployments.
+  minReadySeconds: 10
+  progressDeadlineSeconds: 600
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: foodiguard-api
+  template:
+    metadata:
+      labels:
+        app: foodiguard-api
+        component: api
+    spec:
+      serviceAccountName: foodiguard-api-ksa
+      terminationGracePeriodSeconds: 45
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: foodiguard-api
+      # Native sidecar terminates AFTER API drain, keeping SQL available.
+      initContainers:
+        - name: cloud-sql-proxy
+          restartPolicy: Always
+          image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2
+          args:
+            - "--port=5432"
+            - "foodigard:asia-northeast3:foodiguard-db"
+          securityContext:
+            runAsNonRoot: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
+      containers:
+        - name: foodiguard-api
+          image: BACKEND_IMAGE_PLACEHOLDER
+          imagePullPolicy: Always
+          ports:
+            # PodMonitoring 이 이 이름으로 수집 대상 포트를 가리킨다.
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DB_POOL_MAX
+              value: "3"
+            - name: DB_STATEMENT_TIMEOUT_MS
+              value: "5000"
+            - name: DB_HEALTH_TIMEOUT_MS
+              value: "1500"
+            - name: SEARCH_CONCURRENCY
+              value: "1"
+            - name: SEARCH_QUEUE_MAX
+              value: "10"
+            - name: SEARCH_QUEUE_TIMEOUT_MS
+              value: "1000"
+            - name: SYNC_REQUIRED_SOURCES
+              value: "allergen_projection"
+            - name: GOOGLE_CLOUD_PROJECT
+              value: "foodigard"
+            - name: GOOGLE_CLOUD_LOCATION
+              value: "global"
+            - name: GOOGLE_GENAI_USE_VERTEXAI
+              value: "true"
+            - name: GEMINI_MODEL
+              value: "gemini-3.5-flash"
+            - name: DB_HOST
+              value: "127.0.0.1"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: foodiguard-db-secret
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: foodiguard-db-secret
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: foodiguard-db-secret
+                  key: DB_PASSWORD
+            - name: AUTH_TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: foodiguard-auth-secret
+                  key: AUTH_TOKEN_SECRET
+          lifecycle:
+            preStop:
+              exec:
+                # Allow EndpointSlice/proxy removal to propagate before SIGTERM.
+                command: ["node", "-e", "setTimeout(() => {}, 5000)"]
+          startupProbe:
+            httpGet:
+              path: /api/health/live
+              port: 8080
+            periodSeconds: 2
+            timeoutSeconds: 1
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /api/health/ready
+              port: 8080
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/health/live
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi

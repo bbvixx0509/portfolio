@@ -1,0 +1,376 @@
+/* 전체 박스 크기 계산 방식 */
+* {
+  box-sizing: border-box;
+}
+
+/* 기본 배경색과 글꼴 */
+body {
+  margin: 0;
+  font-family: "Malgun Gothic", Arial, sans-serif;
+  background: #dfe8e4;
+  color: #252b2a;
+}
+
+/* 모바일 화면처럼 보이는 전체 부분 */
+.app {
+  max-width: 760px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #fbf4df;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #d0d8d4;
+  border-right: 1px solid #d0d8d4;
+}
+
+/* 상단 제목 부분 */
+.phone-top {
+  height: 78px;
+  display: grid;
+  grid-template-columns: 52px 1fr 52px;
+  align-items: center;
+  padding: 0 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.phone-top h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.phone-top p {
+  margin: 4px 0 0;
+  color: #66706d;
+  font-size: 14px;
+}
+
+/* 상단 아이콘 버튼 */
+.icon-btn {
+  border: 0;
+  background: transparent;
+  font-size: 36px;
+  color: #26302e;
+  cursor: default;
+}
+
+/* 진한 초록색 브랜드 부분 */
+.brand-bar {
+  height: 74px;
+  background: #16443b;
+  color: white;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand-bar strong {
+  font-size: 26px;
+}
+
+.brand-bar span {
+  border: 1px solid #d9f0e8;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+/* 채팅 내용 부분 */
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px 18px 120px;
+}
+
+/* 날짜 표시 */
+.date-line {
+  text-align: center;
+  color: #7c7c73;
+  margin: 8px 0 22px;
+  font-size: 15px;
+}
+
+/* 채팅 메시지의 기본 배치 */
+.message {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+/* 사용자 메시지는 오른쪽 */
+.message.user {
+  justify-content: flex-end;
+}
+
+/* 봇 메시지는 왼쪽 */
+.message.bot {
+  justify-content: flex-start;
+}
+
+/* 말풍선 디자인 */
+.bubble {
+  max-width: 82%;
+  border-radius: 18px;
+  padding: 15px 17px;
+  line-height: 1.55;
+  box-shadow: 0 4px 12px rgba(30, 38, 35, 0.08);
+}
+
+/* 봇 말풍선은 흰색 */
+.bot .bubble {
+  background: #ffffff;
+  border-top-left-radius: 4px;
+}
+
+/* 사용자 말풍선은 초록색 */
+.user .bubble {
+  background: #1f7665;
+  color: white;
+  border-top-right-radius: 4px;
+}
+
+.intro strong {
+  color: #0b7d8c;
+  font-size: 22px;
+}
+
+.small {
+  color: #6c716e;
+  font-size: 14px;
+}
+
+/* 기본 정보, 빠른 질문, 추천 결과 카드  디자인*/
+.profile-card,
+.quick-card,
+.result-card {
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  margin: 16px 0;
+  box-shadow: 0 5px 16px rgba(32, 40, 36, 0.12);
+}
+
+.profile-card h2,
+.quick-card h2,
+.result-card h2 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  color: #173f38;
+}
+
+/* 입력창과 선택창 */
+label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+input,
+select {
+  width: 100%;
+  margin-top: 7px;
+  border: 1px solid #b5c7c1;
+  border-radius: 8px;
+  padding: 11px 12px;
+  font: inherit;
+  background: #fbfdfc;
+}
+
+/* 나이, 키, 몸무게 배치 */
+.triple {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.quick-card p {
+  margin: 0 0 14px;
+  color: #666d69;
+}
+
+/* 빠른 질문 버튼 배치 */
+.quick-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 빠른 질문 버튼 */
+.quick-grid button {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 15px;
+  background: #ffffff;
+  color: #087f8f;
+  box-shadow: inset 0 0 0 1px #d5e4df;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* BMI와 판정 정보 */
+.result-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.metric {
+  background: #f4f8f6;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.metric span {
+  display: block;
+  color: #69756f;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.metric strong {
+  color: #173f38;
+  font-size: 16px;
+}
+
+/* 추천 식품 카드 목록 */
+.food-list {
+  display: grid;
+  gap: 10px;
+}
+
+/* 추천 식품 한 개 카드 */
+.food-item {
+  border: 1px solid #e0e7e4;
+  border-radius: 12px;
+  padding: 13px;
+  background: #fcfefd;
+}
+
+.food-item h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+}
+
+.serving {
+  color: #4d5b56;
+  font-size: 14px;
+}
+
+/* 식품군 태그 */
+.tag {
+  display: inline-block;
+  margin-bottom: 8px;
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: #e8f3ee;
+  color: #1f7665;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* 영양성분 표시 */
+.nutrients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.nutrients span {
+  background: #f2f6f5;
+  border-radius: 8px;
+  padding: 7px 9px;
+}
+
+/* 추천 이유 목록 */
+.reasons {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: #4a5551;
+  font-size: 13px;
+}
+
+/* 최종 설명 박스 */
+.ai-note {
+  margin-top: 12px;
+  padding: 13px;
+  border-radius: 12px;
+  background: #16443b;
+  color: white;
+  line-height: 1.55;
+}
+
+/* 하단 질문 입력창 */
+.composer {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(760px, 100%);
+  height: 76px;
+  display: grid;
+  grid-template-columns: 58px 1fr 70px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: white;
+  border-top: 1px solid #d6dcd9;
+}
+
+/* 추가 버튼과 전송 버튼 */
+.plus-btn,
+.send-btn {
+  border: 0;
+  border-radius: 12px;
+  height: 48px;
+  font: inherit;
+  font-weight: 700;
+}
+
+/* 추가 버튼은 연한 회색 */
+.plus-btn {
+  background: #edf3f1;
+  color: #57706a;
+  font-size: 30px;
+}
+
+/* 전송 버튼은 녹색 */
+.send-btn {
+  background: #1f7665;
+  color: white;
+}
+
+#messageInput {
+  height: 48px;
+  border-radius: 12px;
+  margin: 0;
+}
+
+.typing {
+  color: #69756f;
+}
+
+/* 작은 화면에서 세로 배치로 조정 */
+@media (max-width: 560px) {
+  .phone-top h1 {
+    font-size: 21px;
+  }
+
+  .brand-bar strong {
+    font-size: 23px;
+  }
+
+  .triple,
+  .result-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .bubble {
+    max-width: 90%;
+  }
+}

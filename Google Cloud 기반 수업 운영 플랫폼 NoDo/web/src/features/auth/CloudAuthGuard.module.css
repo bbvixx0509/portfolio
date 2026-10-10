@@ -1,0 +1,41 @@
+.page {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 24px;
+  background: var(--nodo-bg);
+}
+
+.card {
+  width: min(520px, 100%);
+  padding: clamp(28px, 5vw, 46px);
+  border: 1px solid var(--nodo-border);
+  border-radius: 24px;
+  background: var(--nodo-card);
+  box-shadow: var(--nodo-shadow);
+  text-align: center;
+}
+
+.card > svg { width: 46px; height: 46px; color: var(--nodo-primary); }
+.card h1 { margin: 18px 0 10px; font-size: clamp(28px, 5vw, 38px); }
+.card p { color: var(--nodo-muted); line-height: 1.65; }
+.card [role="alert"] { color: #a12f40; font-weight: 700; }
+.card button,
+.card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  margin-top: 16px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--nodo-primary);
+  color: #fff;
+  font: inherit;
+  font-weight: 850;
+  cursor: pointer;
+  text-decoration: none;
+}
+.card button svg,
+.card a svg { width: 17px; }

@@ -1,0 +1,68 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: foodiguard-db-migrate
+  labels:
+    app: foodiguard-maintenance
+    component: database-migration
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 1800
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app: foodiguard-maintenance
+        component: database-migration
+    spec:
+      serviceAccountName: foodiguard-api-ksa
+      restartPolicy: Never
+      initContainers:
+        - name: cloud-sql-proxy
+          image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2
+          restartPolicy: Always
+          args:
+            - "--port=5432"
+            - "foodigard:asia-northeast3:foodiguard-db"
+          securityContext:
+            runAsNonRoot: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
+      containers:
+        - name: foodiguard-db-migrate
+          image: BACKEND_IMAGE_PLACEHOLDER
+          command: ["npm", "run", "db:migrate"]
+          env:
+            - name: DB_STATEMENT_TIMEOUT_MS
+              value: "900000"
+            - name: DB_HOST
+              value: "127.0.0.1"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: foodiguard-db-secret
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: foodiguard-db-secret
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: foodiguard-db-secret
+                  key: DB_PASSWORD
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi

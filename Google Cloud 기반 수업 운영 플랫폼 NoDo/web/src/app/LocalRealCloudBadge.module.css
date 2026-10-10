@@ -1,0 +1,18 @@
+.badge {
+  position: fixed;
+  z-index: 100;
+  top: 0.65rem;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  border: 1px solid #2d4aa8;
+  border-radius: 999px;
+  background: #eff5ff;
+  color: #173484;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  padding: 0.4rem 0.6rem;
+  pointer-events: none;
+}

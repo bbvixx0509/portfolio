@@ -1,0 +1,99 @@
+.page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: var(--nodo-bg);
+  color: var(--nodo-text);
+}
+
+.panel {
+  width: min(100%, 34rem);
+  padding: 2.5rem;
+  border: 1px solid var(--nodo-border);
+  border-radius: 1.25rem;
+  background: var(--nodo-card);
+  box-shadow: var(--nodo-shadow);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--nodo-primary);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.panel h1 {
+  margin: 0.9rem 0 0;
+  font-size: 1.8rem;
+  line-height: 1.35;
+}
+
+.courseInfo {
+  margin: 1.5rem 0 0;
+}
+
+.courseInfo div {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.courseInfo dt {
+  color: var(--nodo-muted);
+  font-size: 0.78rem;
+}
+
+.courseInfo dd {
+  margin: 0;
+  color: var(--nodo-primary);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.88rem;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  margin: 1.5rem 0 0;
+  color: var(--nodo-muted);
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.actions a {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--nodo-primary);
+  border-radius: 999px;
+  color: var(--nodo-primary);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.actions a:first-child {
+  background: var(--nodo-primary);
+  color: #ffffff;
+}
+
+@media (max-width: 32rem) {
+  .panel {
+    padding: 2rem 1.25rem;
+  }
+
+  .actions,
+  .actions a {
+    width: 100%;
+  }
+}

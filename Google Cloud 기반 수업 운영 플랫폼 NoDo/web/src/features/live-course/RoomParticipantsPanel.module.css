@@ -1,0 +1,27 @@
+.backdrop { position: fixed; inset: 0; z-index: 60; display: grid; justify-items: end; background: rgb(24 29 43 / 42%); }
+.panel { width: min(430px, 100%); height: 100%; padding: 24px; overflow-y: auto; background: #fff; box-shadow: -16px 0 45px rgb(21 28 49 / 18%); }
+.panel > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.panel > header span { display: inline-flex; align-items: center; gap: 5px; color: #3561ef; font-size: 9px; font-weight: 900; letter-spacing: .1em; }
+.panel h2 { margin: 5px 0 0; font-size: 23px; }
+.panel > header > button { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #dde1ea; border-radius: 9px; background: #fff; cursor: pointer; }
+.safeNotice { padding: 10px; border-radius: 9px; background: #f2f4f9; color: #697080; font-size: 10px; line-height: 1.5; }
+.summary { display: flex; align-items: baseline; gap: 6px; margin: 18px 0; padding: 15px; border-radius: 12px; background: #edf1ff; color: #405493; }
+.summary strong { font-size: 25px; }
+.summary span { font-size: 11px; font-weight: 800; }
+.summary small { margin-left: auto; }
+.panel ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.panel li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border: 1px solid #e0e3eb; border-radius: 11px; }
+.panel li > div { display: grid; gap: 3px; min-width: 0; }
+.panel li strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.panel li span { color: #7d8391; font-size: 9px; }
+.panel li button { display: inline-flex; align-items: center; gap: 5px; min-height: 31px; padding: 0 8px; border: 1px solid #d7dce6; border-radius: 8px; background: #fff; color: #4c5361; font-size: 9px; font-weight: 800; cursor: pointer; }
+.panel li button:disabled { cursor: not-allowed; opacity: .45; }
+.empty,
+.ended,
+.panel > p[role="status"] { color: #6e7584; font-size: 10px; line-height: 1.5; }
+.empty { padding: 25px; text-align: center; }
+.ended { color: #955541; }
+
+@media (max-width: 560px) {
+  .panel { padding: 18px 14px; }
+}

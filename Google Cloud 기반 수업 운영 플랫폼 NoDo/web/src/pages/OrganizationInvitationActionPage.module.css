@@ -1,0 +1,143 @@
+.page {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 32px 20px;
+  background: var(--nodo-bg);
+  color: var(--nodo-text);
+}
+
+.card {
+  width: min(560px, 100%);
+  padding: clamp(28px, 5vw, 46px);
+  border: 1px solid var(--nodo-border);
+  border-radius: 18px;
+  background: var(--nodo-card);
+  text-align: center;
+}
+
+.card h1 {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.25;
+  letter-spacing: -0.04em;
+}
+
+.card > p:not(.eyebrow, .error) {
+  margin: 14px auto 0;
+  color: var(--nodo-muted);
+  line-height: 1.65;
+}
+
+.actionIcon,
+.successIcon,
+.statusIcon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  color: var(--nodo-primary);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--nodo-primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 22px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #e6b8bf;
+  border-radius: 10px;
+  background: #fff5f6;
+  color: #913542;
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.error svg {
+  flex: 0 0 auto;
+  width: 18px;
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.primaryButton,
+.dangerButton,
+.secondaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 19px;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 850;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primaryButton {
+  border: 1px solid var(--nodo-primary);
+  background: var(--nodo-primary);
+  color: #fff;
+}
+
+.dangerButton {
+  border: 1px solid #a74350;
+  background: #a74350;
+  color: #fff;
+}
+
+.secondaryLink {
+  border: 1px solid var(--nodo-border);
+  background: var(--nodo-card);
+  color: var(--nodo-text);
+}
+
+.primaryButton:disabled,
+.dangerButton:disabled {
+  cursor: wait;
+  opacity: 0.64;
+}
+
+.primaryButton:focus-visible,
+.dangerButton:focus-visible,
+.secondaryLink:focus-visible {
+  outline: 3px solid rgb(21 94 143 / 24%);
+  outline-offset: 3px;
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding: 18px 14px;
+  }
+
+  .card {
+    padding: 28px 20px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .dangerButton,
+  .secondaryLink {
+    width: 100%;
+  }
+}

@@ -1,0 +1,173 @@
+.header {
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.75rem 1.75rem;
+  border-bottom: 1px solid rgb(41 54 129 / 10%);
+}
+
+.brandGroup {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  min-width: 0;
+}
+
+.logo {
+  flex: 0 0 auto;
+  color: var(--nodo-primary);
+  text-decoration: none;
+}
+
+.logoMark {
+  width: 2.5rem;
+  display: grid;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: -0.12em;
+  line-height: 0.72;
+  text-align: center;
+}
+
+.contextLabel {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.85rem;
+  border: 1px solid var(--nodo-border-strong);
+  border-radius: 999px;
+  color: var(--nodo-muted);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.user {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+  padding: 0.4rem 0.8rem 0.4rem 0.4rem;
+  border: 1px solid var(--nodo-border);
+  border-radius: 999px;
+  background: rgb(245 255 255 / 82%);
+}
+
+.accountActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.avatar {
+  width: 2.15rem;
+  height: 2.15rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--nodo-primary);
+  color: #ffffff;
+  font-size: 0.8rem;
+}
+
+.avatarImage {
+  width: 2.15rem;
+  height: 2.15rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.greeting {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--nodo-muted);
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.greeting strong {
+  color: var(--nodo-text);
+  font-weight: 750;
+}
+
+.role {
+  display: block;
+  margin-top: 0.06rem;
+  color: var(--nodo-primary);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.organizationLink,
+.logoutButton {
+  min-height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--nodo-border-strong);
+  border-radius: 0.7rem;
+  background: rgb(245 255 255 / 82%);
+  color: var(--nodo-text);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logoutButton {
+  cursor: pointer;
+}
+
+.organizationLink:hover,
+.logoutButton:hover:not(:disabled) {
+  border-color: var(--nodo-primary);
+  color: var(--nodo-primary);
+}
+
+.logoutButton:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+@media (max-width: 40rem) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+
+  .brandGroup,
+  .accountActions,
+  .user {
+    width: 100%;
+  }
+
+  .accountActions {
+    align-self: stretch;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 28rem) {
+  .organizationLink span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}

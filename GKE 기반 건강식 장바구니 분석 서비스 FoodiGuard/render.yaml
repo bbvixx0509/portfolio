@@ -1,0 +1,28 @@
+# Render 블루프린트 — 저장소를 연결하면 아래 2개가 한 번에 생성됩니다.
+#  1) foodiguard-db  : 무료 PostgreSQL (덤프는 최초 1회 직접 복원)
+#  2) foodiguard-api : backend/Dockerfile 그대로 빌드되는 API
+databases:
+  - name: foodiguard-db
+    plan: free
+    region: singapore
+    databaseName: foodiguard
+    user: foodiguard
+
+services:
+  - type: web
+    name: foodiguard-api
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: foodiguard-db
+          property: connectionString
+      - key: LOCAL_PGLITE
+        value: "false"
+      - key: CORS_ORIGIN
+        value: https://foodiguard-web.onrender.com

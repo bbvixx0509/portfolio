@@ -1,0 +1,328 @@
+.page {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-block-size: 100svh;
+  block-size: 100dvh;
+  overflow: hidden;
+  background: #fcf7e9;
+  color: #20333f;
+  font-family: Pretendard, "Noto Sans KR", sans-serif;
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: minmax(80px, .65fr) minmax(0, 2.7fr) auto;
+  align-items: center;
+  gap: 1.1rem;
+  min-block-size: 78px;
+  padding: 0 clamp(20px, 5vw, 72px);
+  border-bottom: 1px solid rgb(32 67 82 / 14%);
+  background: rgb(248 255 255 / 88%);
+}
+
+.logo {
+  color: #152d58;
+  font-size: 20px;
+  font-weight: 950;
+  letter-spacing: -.08em;
+  text-decoration: none;
+}
+
+.logo span { color: #293b91; }
+
+.roomIdentity { display: grid; min-width: 0; gap: 3px; }
+.roomIdentity strong {
+  overflow: hidden;
+  font-size: clamp(15px, 2vw, 20px);
+  letter-spacing: -.025em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.roomIdentity span { color: #607388; font-size: 12px; font-weight: 700; }
+.headerAction { display: flex; justify-content: flex-end; min-width: 0; }
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12px minmax(340px, var(--live-room-panel-width, 440px));
+  min-block-size: 0;
+  overflow: hidden;
+  border-top: 1px solid #e0dfd7;
+}
+
+.resizeHandle {
+  position: relative;
+  z-index: 2;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.resizeHandle::before {
+  position: absolute;
+  inset: 0 5px;
+  border-radius: 999px;
+  background: #d6ddda;
+  content: "";
+  transition: background .16s ease, transform .16s ease;
+}
+
+.resizeHandle:hover::before,
+.resizeHandle:focus-visible::before,
+.resizing::before {
+  background: #155e8f;
+  transform: scaleX(1.6);
+}
+
+.resizeHandle:focus-visible {
+  outline: 3px solid rgb(21 94 143 / 24%);
+  outline-offset: -2px;
+}
+
+.context {
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(24px, 3.4vw, 48px) clamp(20px, 4vw, 64px) 40px;
+  scrollbar-gutter: stable;
+}
+
+.panel {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  min-block-size: 0;
+  border-left: 1px solid #d6ddda;
+  background: #fffefa;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-block-size: 64px;
+  padding: 0 18px;
+  border-bottom: 1px solid #dfe4e1;
+}
+
+.panelHeader > p {
+  margin: 0;
+  color: #155e8f;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid #c7d5d5;
+  border-radius: 10px;
+  background: #f6f5ee;
+}
+
+.tabs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-block-size: 34px;
+  box-sizing: border-box;
+  padding: 7px 11px;
+  border-radius: 7px;
+  color: #4c606b;
+  font-size: 12px;
+  font-weight: 850;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tabs a[aria-current="page"] {
+  background: #155e8f;
+  box-shadow: none;
+  color: #fff;
+}
+
+.managedTabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  position: relative;
+  isolation: isolate;
+}
+
+.managedTabs::before {
+  position: absolute;
+  z-index: 0;
+  inset: 3px auto 3px 3px;
+  width: calc((100% - 6px) / var(--live-room-tab-count, 2));
+  border-radius: 7px;
+  background: #155e8f;
+  box-shadow: none;
+  content: "";
+  transform: translateX(calc(100% * var(--live-room-tab-offset, 0)));
+  transition: transform 180ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.managedTabs a { position: relative; z-index: 1; justify-content: center; }
+.managedTabs a[aria-current="page"] { background: transparent; box-shadow: none; }
+
+.tabs b {
+  display: grid;
+  place-items: center;
+  min-inline-size: 18px;
+  block-size: 18px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 20%);
+  font-size: 10px;
+}
+
+.panelBody {
+  min-block-size: 0;
+  overflow: hidden;
+  border-top: 1px solid #e0dfd7;
+  view-transition-name: nodo-live-room-panel-body;
+}
+
+.panelSwitch {
+  position: relative;
+  block-size: 100%;
+  min-block-size: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.panelPane {
+  position: absolute;
+  inset: 0;
+  min-block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms cubic-bezier(.2, .8, .2, 1), transform 180ms cubic-bezier(.2, .8, .2, 1);
+  will-change: opacity, transform;
+}
+
+.roadmapPane { transform: translateX(-8%); }
+.chatPane { transform: translateX(8%); }
+.assistantPane { transform: translateX(8%); }
+.panelSwitch[data-active-tab="roadmap"] .roadmapPane,
+.panelSwitch[data-active-tab="chat"] .chatPane,
+.panelSwitch[data-active-tab="assistant"] .assistantPane {
+  position: relative;
+  z-index: 1;
+  block-size: 100%;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.panelSwitch[data-active-tab="chat"] .roadmapPane { transform: translateX(-8%); }
+.panelSwitch[data-active-tab="roadmap"] .chatPane { transform: translateX(8%); }
+.panelSwitch[data-active-tab="assistant"] .roadmapPane,
+.panelSwitch[data-active-tab="assistant"] .chatPane { transform: translateX(-8%); }
+.panelSwitch[data-active-tab="roadmap"] .assistantPane,
+.panelSwitch[data-active-tab="chat"] .assistantPane { transform: translateX(8%); }
+
+.panelFixed {
+  min-block-size: 0;
+}
+
+.panelFixed:not(:empty) {
+  padding: 12px 14px 0;
+}
+
+.tabs a[aria-current="page"] {
+  view-transition-name: nodo-live-room-tab-pill;
+}
+
+::view-transition-group(nodo-live-room-panel-body),
+::view-transition-group(nodo-live-room-tab-pill) {
+  animation-duration: 180ms;
+  animation-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+
+:root[data-live-room-tab-transition="roadmap-to-chat"]::view-transition-old(nodo-live-room-panel-body) {
+  animation: nodo-panel-slide-out-left 180ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+:root[data-live-room-tab-transition="roadmap-to-chat"]::view-transition-new(nodo-live-room-panel-body) {
+  animation: nodo-panel-slide-in-right 180ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+:root[data-live-room-tab-transition="chat-to-roadmap"]::view-transition-old(nodo-live-room-panel-body) {
+  animation: nodo-panel-slide-out-right 180ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+:root[data-live-room-tab-transition="chat-to-roadmap"]::view-transition-new(nodo-live-room-panel-body) {
+  animation: nodo-panel-slide-in-left 180ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@keyframes nodo-panel-slide-out-left {
+  to { opacity: 0; transform: translateX(-7%); }
+}
+
+@keyframes nodo-panel-slide-in-right {
+  from { opacity: 0; transform: translateX(8%); }
+}
+
+@keyframes nodo-panel-slide-out-right {
+  to { opacity: 0; transform: translateX(7%); }
+}
+
+@keyframes nodo-panel-slide-in-left {
+  from { opacity: 0; transform: translateX(-8%); }
+}
+
+@media (max-width: 900px) {
+  .context { padding-inline: clamp(20px, 4vw, 48px); }
+  .panelHeader { padding-inline: 16px; }
+}
+
+@media (max-width: 720px) {
+  .page {
+    display: block;
+    block-size: auto;
+    min-block-size: 100dvh;
+    overflow: visible;
+  }
+
+  .topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-block-size: 68px;
+    padding: 0 14px;
+    gap: 10px;
+  }
+
+  .roomIdentity { display: none; }
+  .workspace { display: block; overflow: visible; }
+  .resizeHandle { display: none; }
+  .context { overflow: visible; padding: 22px 14px 14px; }
+
+  .panel {
+    min-block-size: min(68dvh, 660px);
+    border-top: 1px solid #d6ddda;
+    border-left: 0;
+  }
+
+  .panelHeader { min-block-size: 58px; padding: 0 14px; }
+  .panelFixed:not(:empty) { padding: 14px 14px 0; }
+  .panelHeader > p { display: none; }
+  .tabs { flex: 1; justify-content: stretch; }
+  .tabs a { flex: 1; justify-content: center; padding: 9px 10px; }
+  .managedTabs { display: grid; }
+}
+
+@media (max-width: 390px) {
+  .logo { font-size: 18px; }
+  .tabs a { padding-inline: 8px; font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panelBody,
+  .tabs a[aria-current="page"] { view-transition-name: none; }
+  ::view-transition-old(nodo-live-room-panel-body),
+  ::view-transition-new(nodo-live-room-panel-body),
+  ::view-transition-old(nodo-live-room-tab-pill),
+  ::view-transition-new(nodo-live-room-tab-pill) { animation: none; }
+  .managedTabs::before,
+  .panelPane { transition: none; }
+}

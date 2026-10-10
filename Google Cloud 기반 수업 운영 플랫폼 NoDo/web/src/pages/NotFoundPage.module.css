@@ -1,0 +1,26 @@
+.page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--nodo-bg);
+  color: var(--nodo-text);
+  text-align: center;
+}
+
+.page h1,
+.page p {
+  margin: 0;
+}
+
+.page p {
+  color: var(--nodo-muted);
+}
+
+.page a {
+  color: var(--nodo-primary);
+  font-weight: 750;
+}

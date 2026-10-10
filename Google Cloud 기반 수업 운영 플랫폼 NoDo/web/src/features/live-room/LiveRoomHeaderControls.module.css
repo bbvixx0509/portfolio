@@ -1,0 +1,102 @@
+.account,
+.shareButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  border: 1px solid #c3d2d1;
+  border-radius: 8px;
+  background: #fffefa;
+  color: #324a55;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.account { padding: 4px 5px 4px 9px; }
+.accountIdentity { display: grid; gap: 1px; min-width: 0; }
+.accountIdentity strong { max-inline-size: 11rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.accountIdentity small { color: #64788b; font-size: 10px; }
+
+.account button,
+.shareButton,
+.shareDetails button { cursor: pointer; }
+
+.account button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 6px;
+  background: #f1f3ee;
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.share { position: relative; }
+.shareButton { padding: 0 11px; }
+
+.shareDetails {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  display: grid;
+  gap: 10px;
+  width: min(23rem, calc(100vw - 28px));
+  padding: 13px;
+  border: 1px solid #c5d5d3;
+  border-radius: 10px;
+  background: #fffefa;
+  box-shadow: 0 10px 24px rgb(31 58 84 / 10%);
+  color: #29435f;
+}
+
+.shareDetails > strong { font-size: 13px; }
+.shareDetails > p { margin: 0; color: #526c7f; font-size: 12px; }
+.shareDetails label { display: grid; gap: 5px; color: #536b7e; font-size: 11px; font-weight: 800; }
+.shareDetails label > span { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; }
+.shareDetails input {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid #c2d7da;
+  border-radius: 8px;
+  background: #fff;
+  color: #263e5c;
+  font: inherit;
+  font-size: 12px;
+}
+.shareDetails button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
+  border: 1px solid #aac8cc;
+  border-radius: 8px;
+  background: #fff;
+  color: #27406f;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.account button:focus-visible,
+.shareButton:focus-visible,
+.shareDetails button:focus-visible,
+.shareDetails input:focus-visible {
+  outline: 3px solid rgb(41 59 145 / 30%);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .account { padding: 4px 5px; }
+  .accountIdentity,
+  .account > svg { display: none; }
+  .account button span { display: none; }
+  .account button { min-width: 30px; justify-content: center; padding: 0; }
+  .shareButton { min-height: 34px; padding: 0 9px; }
+}

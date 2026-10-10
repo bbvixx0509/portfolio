@@ -1,0 +1,332 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userPath(userId) {
+      return /databases/$(database)/documents/users/$(userId);
+    }
+
+    function currentUserExists() {
+      return isSignedIn() && exists(userPath(request.auth.uid));
+    }
+
+    function currentUser() {
+      return get(userPath(request.auth.uid)).data;
+    }
+
+    function isCurrentUserStaff() {
+      return currentUserExists() && currentUser().accountType == 'STAFF';
+    }
+
+    function isCurrentUserStudent() {
+      return currentUserExists() && currentUser().accountType == 'STUDENT';
+    }
+
+    function isCurrentUserOrgAdmin() {
+      return isCurrentUserStaff() && currentUser().organizationRole == 'ADMIN';
+    }
+
+    function isSameOrganization(orgId) {
+      return currentUserExists() && currentUser().orgId == orgId;
+    }
+
+    function roomPath(roomId) {
+      return /databases/$(database)/documents/rooms/$(roomId);
+    }
+
+    function staffPath(roomId, userId) {
+      return /databases/$(database)/documents/rooms/$(roomId)/staff/$(userId);
+    }
+
+    function participantPath(roomId, userId) {
+      return /databases/$(database)/documents/rooms/$(roomId)/participants/$(userId);
+    }
+
+    function roomExists(roomId) {
+      return exists(roomPath(roomId));
+    }
+
+    function room(roomId) {
+      return get(roomPath(roomId)).data;
+    }
+
+    function isRoomLead(roomId) {
+      return isSignedIn()
+        && isCurrentUserStaff()
+        && roomExists(roomId)
+        && isSameOrganization(room(roomId).orgId)
+        && room(roomId).leadInstructorId == request.auth.uid;
+    }
+
+    function isInvitedRoomStaff(roomId) {
+      return isSignedIn()
+        && isCurrentUserStaff()
+        && roomExists(roomId)
+        && isSameOrganization(room(roomId).orgId)
+        && exists(staffPath(roomId, request.auth.uid))
+        && get(staffPath(roomId, request.auth.uid)).data.userId == request.auth.uid
+        && get(staffPath(roomId, request.auth.uid)).data.orgId == room(roomId).orgId;
+    }
+
+    function hasRoomPermission(roomId, permission) {
+      return isInvitedRoomStaff(roomId)
+        && get(staffPath(roomId, request.auth.uid)).data.permissions[permission] == true;
+    }
+
+    function isJoinedRoomParticipant(roomId) {
+      return isSignedIn()
+        && isCurrentUserStudent()
+        && roomExists(roomId)
+        && room(roomId).status in ['ACTIVE', 'ENDING', 'ENDED']
+        && exists(participantPath(roomId, request.auth.uid))
+        && get(participantPath(roomId, request.auth.uid)).data.userId == request.auth.uid
+        && get(participantPath(roomId, request.auth.uid)).data.orgId == room(roomId).orgId;
+    }
+
+    function isPublicVisibleQuestion(questionData) {
+      return questionData.visibility == 'PUBLIC'
+        && questionData.isHidden == false;
+    }
+
+    function canReadQuestion(roomId, questionData) {
+      return isRoomLead(roomId)
+        || (
+          isInvitedRoomStaff(roomId)
+          && (
+            isPublicVisibleQuestion(questionData)
+            || hasRoomPermission(roomId, 'canModerateQuestions')
+          )
+        )
+        || (
+          isJoinedRoomParticipant(roomId)
+          && isPublicVisibleQuestion(questionData)
+        );
+    }
+
+    function canReadOwnQuestionState(roomId, staffUserId) {
+      return isSignedIn()
+        && request.auth.uid == staffUserId
+        && (
+          isRoomLead(roomId)
+          || isInvitedRoomStaff(roomId)
+        );
+    }
+
+    function canReadRoomSummary(roomId) {
+      return isRoomLead(roomId)
+        || hasRoomPermission(roomId, 'canViewReports')
+        || (
+          isCurrentUserOrgAdmin()
+          && roomExists(roomId)
+          && isSameOrganization(room(roomId).orgId)
+        );
+    }
+
+    function canReadRoom(roomId) {
+      return (
+          isCurrentUserOrgAdmin()
+          && roomExists(roomId)
+          && isSameOrganization(room(roomId).orgId)
+        )
+        || isRoomLead(roomId)
+        || isInvitedRoomStaff(roomId)
+        || isJoinedRoomParticipant(roomId);
+    }
+
+    function canStudentReadCourse(courseId, courseData) {
+      return isCurrentUserStudent()
+        && courseData.keys().hasAll(['activeRoomId'])
+        && roomExists(courseData.activeRoomId)
+        && room(courseData.activeRoomId).courseId == courseId
+        && room(courseData.activeRoomId).orgId == courseData.orgId
+        && isJoinedRoomParticipant(courseData.activeRoomId);
+    }
+
+    function canInvitedStaffReadCourse(courseId, courseData) {
+      return isCurrentUserStaff()
+        && courseData.keys().hasAll(['activeRoomId'])
+        && roomExists(courseData.activeRoomId)
+        && room(courseData.activeRoomId).courseId == courseId
+        && room(courseData.activeRoomId).orgId == courseData.orgId
+        && isInvitedRoomStaff(courseData.activeRoomId);
+    }
+
+    function canReadCourse(courseId, courseData) {
+      return (
+          isCurrentUserOrgAdmin()
+          && isSameOrganization(courseData.orgId)
+        )
+        || (
+          isCurrentUserStaff()
+          && isSameOrganization(courseData.orgId)
+          && courseData.leadInstructorId == request.auth.uid
+        )
+        || canInvitedStaffReadCourse(courseId, courseData)
+        || canStudentReadCourse(courseId, courseData);
+    }
+
+    function ownsDiagnosticDocument(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function hasValidDiagnosticFields(userId) {
+      return request.resource.data.keys().hasAll([
+          'ownerUid',
+          'source',
+          'checkedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'ownerUid',
+          'source',
+          'checkedAt'
+        ])
+        && request.resource.data.ownerUid == userId
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.source == 'NoDo_01-dev-emulator'
+        && request.resource.data.checkedAt is timestamp;
+    }
+
+    match /emulatorChecks/{userId} {
+      allow get: if ownsDiagnosticDocument(userId);
+      allow create, update: if ownsDiagnosticDocument(userId)
+        && hasValidDiagnosticFields(userId);
+      allow delete: if ownsDiagnosticDocument(userId);
+    }
+
+    match /organizations/{orgId} {
+      allow read: if isCurrentUserStaff() && isSameOrganization(orgId);
+      allow write: if false;
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn() && (
+        request.auth.uid == userId
+        || (
+          isCurrentUserOrgAdmin()
+          && resource.data.accountType == 'STAFF'
+          && isSameOrganization(resource.data.orgId)
+        )
+      );
+      allow write: if false;
+    }
+
+    match /courses/{courseId} {
+      allow read: if canReadCourse(courseId, resource.data);
+      allow write: if false;
+
+      match /chapters/{chapterId} {
+        allow read: if canReadCourse(
+          courseId,
+          get(/databases/$(database)/documents/courses/$(courseId)).data
+        );
+        allow write: if false;
+      }
+
+      match /items/{itemId} {
+        allow read: if canReadCourse(
+          courseId,
+          get(/databases/$(database)/documents/courses/$(courseId)).data
+        );
+        allow write: if false;
+      }
+
+      match /materials/{materialId} {
+        allow read: if canReadCourse(
+          courseId,
+          get(/databases/$(database)/documents/courses/$(courseId)).data
+        ) && (
+          !isCurrentUserStudent()
+          || resource.data.isShared == true
+        );
+        allow write: if false;
+      }
+    }
+
+    match /rooms/{roomId} {
+      allow read: if canReadRoom(roomId);
+      allow write: if false;
+
+      match /staff/{userId} {
+        allow get: if resource.data.userId == userId
+          && (
+            isRoomLead(roomId)
+            || (
+              isSignedIn()
+              && request.auth.uid == userId
+              && isInvitedRoomStaff(roomId)
+            )
+          );
+        allow list: if isRoomLead(roomId);
+        allow write: if false;
+      }
+
+      match /participants/{userId} {
+        allow get: if resource.data.userId == userId
+          && isSignedIn()
+          && request.auth.uid == userId
+          && canReadRoom(roomId);
+        // 참여자 목록은 UID가 노출되지 않는 FastAPI 응답으로만 제공한다.
+        allow list: if false;
+        allow write: if false;
+      }
+
+      match /permissionLogs/{logId} {
+        allow read: if isRoomLead(roomId);
+        allow write: if false;
+      }
+
+      match /questions/{questionId} {
+        allow read: if canReadQuestion(roomId, resource.data);
+        allow write: if false;
+      }
+
+      // Firebase UID와 서버용 제한/감사 정보는 어떤 클라이언트에도 노출하지 않는다.
+      match /questionAuthors/{questionId} {
+        allow read, write: if false;
+      }
+
+      match /questionRateLimits/{participantId} {
+        allow read, write: if false;
+      }
+
+      match /moderationLogs/{logId} {
+        allow read, write: if false;
+      }
+
+      // 각 강사는 본인의 읽음 상태만 구독한다. 갱신은 FastAPI만 수행한다.
+      match /questionReads/{staffUserId} {
+        allow read: if canReadOwnQuestionState(roomId, staffUserId);
+        allow write: if false;
+
+        match /contexts/{contextId} {
+          allow read: if canReadOwnQuestionState(roomId, staffUserId);
+          allow write: if false;
+        }
+      }
+
+      match /summary/{summaryId} {
+        allow read: if summaryId == 'current'
+          && canReadRoomSummary(roomId);
+        allow write: if false;
+      }
+    }
+
+    // 보조 강사는 본인에게 배정된 방만 collectionGroup으로 구독한다.
+    // 클라이언트 쿼리는 반드시 userId == request.auth.uid 제약을 사용한다.
+    match /{path=**}/staff/{userId} {
+      allow read: if isSignedIn()
+        && isCurrentUserStaff()
+        && resource.data.userId == request.auth.uid
+        && resource.data.orgId == currentUser().orgId;
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

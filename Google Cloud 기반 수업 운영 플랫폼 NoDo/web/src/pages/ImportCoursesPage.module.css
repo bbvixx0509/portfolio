@@ -1,0 +1,317 @@
+.page {
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--nodo-bg);
+  color: var(--nodo-text);
+}
+
+.main {
+  width: min(100%, 58rem);
+  margin: 0 auto;
+  padding: 2.8rem 1rem 2rem;
+}
+
+.intro {
+  text-align: center;
+}
+
+.step {
+  margin: 0;
+  color: var(--nodo-primary);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.title {
+  margin: 1rem 0 0;
+  color: var(--nodo-text);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+}
+
+.title span {
+  color: var(--nodo-primary);
+}
+
+.subtitle {
+  margin: 0.85rem 0 0;
+  color: var(--nodo-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.catalog {
+  margin-top: 1.75rem;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(15rem, 1fr) auto auto;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.searchField {
+  min-width: 0;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0 1.1rem;
+  border: 1px solid var(--nodo-border-strong);
+  border-radius: 999px;
+  background: rgb(245 255 255 / 88%);
+  color: var(--nodo-primary);
+}
+
+.searchField:focus-within {
+  border-color: var(--nodo-primary);
+  outline: 3px solid rgb(41 54 129 / 20%);
+  outline-offset: 2px;
+}
+
+.searchField input {
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--nodo-text);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.searchField input::placeholder {
+  color: var(--nodo-muted-soft);
+  opacity: 1;
+}
+
+.sortControl {
+  width: 2.75rem;
+  height: 2.75rem;
+  position: relative;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--nodo-primary);
+  border-radius: 50%;
+  background: var(--nodo-card);
+  color: var(--nodo-primary);
+  cursor: pointer;
+}
+
+.sortControl:has(select:focus-visible) {
+  outline: 3px solid rgb(41 54 129 / 35%);
+  outline-offset: 3px;
+}
+
+.sortControl select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.filterButton {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--nodo-border-strong);
+  border-radius: 999px;
+  background: rgb(245 255 255 / 88%);
+  color: var(--nodo-muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.filterButton:hover {
+  border-color: var(--nodo-primary);
+  color: var(--nodo-primary);
+}
+
+.filterButton[aria-pressed="true"] {
+  border-color: var(--nodo-primary);
+  background: var(--nodo-primary);
+  color: #ffffff;
+}
+
+.courseList {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1.2rem;
+}
+
+.emptyState {
+  min-height: 15rem;
+  display: grid;
+  place-content: center;
+  gap: 0.45rem;
+  margin-top: 1.2rem;
+  border: 1px dashed var(--nodo-border-strong);
+  border-radius: 1rem;
+  background: rgb(245 255 255 / 55%);
+  color: var(--nodo-muted);
+  text-align: center;
+}
+
+.emptyState strong {
+  color: var(--nodo-text);
+}
+
+.actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.6rem;
+  padding: 0.85rem 0;
+  background: rgb(208 231 230 / 96%);
+}
+
+.createLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--nodo-muted);
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.createLink:hover {
+  color: var(--nodo-primary);
+}
+
+.selectionSummary {
+  min-width: 0;
+  margin: 0;
+  color: var(--nodo-muted);
+  font-size: 0.86rem;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.selectionSummary strong {
+  color: var(--nodo-text);
+}
+
+.importButton {
+  min-width: 9.8rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--nodo-primary);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  box-shadow: 0 0.75rem 1.4rem rgb(41 54 129 / 18%);
+  cursor: pointer;
+}
+
+.importButton:hover:not(:disabled) {
+  background: var(--nodo-primary-hover);
+}
+
+.importButton:disabled {
+  background: #8993a8;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.srOnly {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 56rem) {
+  .toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .filters {
+    grid-column: 1 / -1;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 40rem) {
+  .main {
+    padding: 2.25rem 1rem 1.25rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+  }
+
+  .catalog {
+    margin-top: 1.5rem;
+  }
+
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .filterButton {
+    min-width: 0;
+    padding-inline: 0.35rem;
+    font-size: 0.72rem;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    margin-inline: -1rem;
+    padding: 0.9rem 1rem 1rem;
+    border-top: 1px solid rgb(41 54 129 / 10%);
+  }
+
+  .selectionSummary {
+    grid-row: 1;
+    text-align: left;
+  }
+
+  .createLink {
+    grid-row: 2;
+  }
+
+  .importButton {
+    width: 100%;
+  }
+}

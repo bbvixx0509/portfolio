@@ -1,0 +1,17 @@
+{
+  "name": "nodo-firebase-emulators",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Local-only Firebase Emulator tooling for NoDo development",
+  "scripts": {
+    "dev:emulator": "npm --prefix web run dev:emulator",
+    "dev:cloud-auth": "npm --prefix web run dev:cloud-auth",
+    "dev:cloud-auth:local": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start-cloud-auth-local.ps1",
+    "emulators:start": "firebase emulators:start --project demo-nodo --only auth,firestore,storage",
+    "emulators:start:debug": "firebase emulators:start --project demo-nodo --only auth,firestore,storage --debug",
+    "test:emulator": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-emulator-tests.ps1"
+  },
+  "devDependencies": {
+    "firebase-tools": "15.23.0"
+  }
+}

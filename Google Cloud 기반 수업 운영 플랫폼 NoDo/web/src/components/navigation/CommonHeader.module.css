@@ -1,0 +1,215 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 64px;
+  padding: 0 clamp(18px, 3vw, 44px);
+  border-bottom: 1px solid rgb(21 94 143 / 18%);
+  background: #fcf7e9;
+  color: #173047;
+}
+
+.leading,
+.actions,
+.account,
+.homeLink,
+.extraAction {
+  display: flex;
+  align-items: center;
+}
+
+.leading {
+  gap: 14px;
+  min-width: 0;
+}
+
+.logo {
+  display: block;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  text-decoration: none;
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.context {
+  min-width: 0;
+  overflow: hidden;
+  padding: 6px 10px;
+  border: 1px solid rgb(21 94 143 / 20%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 45%);
+  color: #4e6678;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.account {
+  gap: 8px;
+  min-width: 0;
+  padding: 4px 5px 4px 8px;
+  border: 1px solid rgb(21 94 143 / 16%);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 72%);
+}
+
+.account img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.account > span {
+  display: grid;
+  min-width: 0;
+}
+
+.account strong {
+  max-width: 148px;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account small {
+  color: #657b8b;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.account button,
+.homeLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid rgb(21 94 143 / 20%);
+  border-radius: 8px;
+  background: #fffdf8;
+  color: #25465e;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.account button {
+  min-height: 30px;
+  cursor: pointer;
+}
+
+.account button:hover,
+.homeLink:hover {
+  border-color: rgb(21 94 143 / 38%);
+  background: #f8fbfa;
+}
+
+.account button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.account button:focus-visible,
+.homeLink:focus-visible,
+.logo:focus-visible {
+  outline: 3px solid rgb(21 94 143 / 22%);
+  outline-offset: 2px;
+}
+
+.extraAction {
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .header {
+    min-height: 58px;
+    padding: 0 12px;
+    gap: 10px;
+  }
+
+  .logo {
+    flex-basis: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .account > span {
+    display: none;
+  }
+
+  .account {
+    padding: 3px 4px;
+  }
+
+  .account button {
+    padding: 0 7px;
+  }
+
+  .homeLink {
+    font-size: 10px;
+    padding: 0 8px;
+  }
+
+  .context {
+    max-width: 34vw;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 420px) {
+  .actions {
+    gap: 5px;
+  }
+
+  .account {
+    border: 0;
+    background: transparent;
+  }
+
+  .account > svg,
+  .account > img {
+    display: none;
+  }
+
+  .account button {
+    min-width: 32px;
+  }
+
+  .context {
+    max-width: 28vw;
+  }
+
+  .homeLink {
+    min-width: 34px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .homeLink svg {
+    width: 16px;
+    height: 16px;
+  }
+}

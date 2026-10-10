@@ -1,0 +1,50 @@
+:root {
+  font-family:
+    Pretendard, "Noto Sans KR", Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  color: #172b3a;
+  background: #fcf7e9;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --nodo-bg: #fcf7e9;
+  --nodo-card: #fffdf7;
+  --nodo-card-recommended: #edf6f8;
+  --nodo-icon-bg: #eef5f2;
+  --nodo-primary: #155e8f;
+  --nodo-primary-hover: #104d77;
+  --nodo-primary-soft: #e7f1f5;
+  --nodo-text: #172b3a;
+  --nodo-muted: #5d6f7b;
+  --nodo-muted-soft: #74848e;
+  --nodo-border: #d7dedb;
+  --nodo-border-strong: #b9c9cd;
+  --nodo-surface: #fffdf7;
+  --nodo-surface-raised: #ffffff;
+  --nodo-danger: #a64545;
+  --nodo-warning: #9a6824;
+  --nodo-success: #37735b;
+  --nodo-radius-sm: 6px;
+  --nodo-radius-md: 10px;
+  --nodo-shadow: 0 8px 24px rgb(38 55 62 / 6%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  background: var(--nodo-bg);
+  color: var(--nodo-text);
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+:where(a, button):focus-visible {
+  outline: 3px solid rgb(21 94 143 / 28%);
+  outline-offset: 3px;
+}

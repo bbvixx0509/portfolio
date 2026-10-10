@@ -1,0 +1,79 @@
+.page { min-height: 100vh; background: #f4f5f8; color: #202331; }
+.header { display: flex; align-items: center; gap: 13px; min-height: 70px; padding: 0 28px; border-bottom: 1px solid #dfe2e9; background: #fff; }
+.header > a:first-child { display: flex; color: #202331; font-size: 18px; font-weight: 950; text-decoration: none; }
+.header > a:first-child span:last-child { color: #3561ef; }
+.header > span { padding: 6px 9px; border-radius: 8px; background: #edf1ff; color: #3b55a6; font-size: 10px; font-weight: 900; }
+.header nav { display: flex; gap: 18px; margin-left: auto; }
+.header nav a { color: #535a6a; font-size: 11px; font-weight: 900; text-decoration: none; }
+.layout { display: grid; grid-template-columns: minmax(300px, .42fr) minmax(0, 1fr); min-height: calc(100vh - 70px); }
+.settings { padding: 28px; border-right: 1px solid #dfe2e9; background: #fff; }
+.settings > p:first-child,
+.flowHeading p { margin: 0 0 7px; color: #3561ef; font-size: 9px; font-weight: 900; letter-spacing: .13em; }
+.settings h1 { margin: 0 0 25px; font-size: 31px; }
+.settings form { display: grid; gap: 10px; margin-bottom: 21px; padding-bottom: 21px; border-bottom: 1px solid #eceef3; }
+.settings label { display: grid; gap: 7px; font-size: 11px; font-weight: 900; }
+.settings input,
+.addForms input,
+.addForms select { min-height: 40px; padding: 0 10px; border: 1px solid #d8dce6; border-radius: 9px; background: #fff; font: inherit; box-sizing: border-box; }
+.settings input[readonly] { background: #f1f2f5; color: #777d8c; }
+.settings .shareToggle { display: flex; align-items: center; gap: 8px; font-weight: 800; }
+.settings .shareToggle input { width: 18px; min-height: 18px; margin: 0; accent-color: #3561ef; }
+.settings button,
+.flowHeading button,
+.addForms button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 37px; padding: 0 11px; border: 1px solid #d8dce6; border-radius: 9px; background: #fff; color: #353a48; font-size: 10px; font-weight: 900; cursor: pointer; }
+.settings small { color: #7c8290; font-size: 9px; line-height: 1.5; }
+.shareBox { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #eceef3; }
+.shareBox p { overflow-wrap: anywhere; color: #3c5195; font-size: 10px; }
+.shareDetails { display: grid; justify-items: center; gap: 7px; margin-top: 11px; padding: 12px; border-radius: 10px; background: #f7f8fb; color: #2f3f7c; text-align: center; }
+.shareDetails a { max-width: 100%; overflow-wrap: anywhere; color: #3c5195; font-size: 9px; }
+.qrCode { display: grid; place-items: center; padding: 8px; border-radius: 8px; background: #fff; }
+.qrCode svg { display: block; max-width: 100%; height: auto; }
+.createRoom { width: 100%; border-color: #202331 !important; background: #202331 !important; color: #fff !important; }
+.readOnly,
+.notice { padding: 11px; border-radius: 9px; background: #fff4df; color: #7d591d; font-size: 10px; line-height: 1.5; }
+.notice { background: #edf1ff; color: #3d5193; }
+.flowPanel { min-width: 0; padding: 28px; }
+.flowHeading { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
+.flowHeading h2 { margin: 0; font-size: 23px; }
+.flowHeading button { border-color: #202331; background: #202331; color: #fff; }
+.flowHeading button:disabled { border-color: #d8dce6; background: #e8eaf0; color: #838895; }
+.chapters { display: grid; gap: 15px; }
+.chapters article { overflow: hidden; border: 1px solid #dfe2ea; border-radius: 14px; background: #fff; }
+.chapters article > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 15px; border-bottom: 1px solid #eceef3; background: #fafbfc; }
+.chapters article > header input { min-width: 0; flex: 1; border: 0; background: transparent; font: inherit; font-size: 13px; font-weight: 900; }
+.chapters article > header span { color: #737988; font-size: 10px; }
+.chapterActions { display: flex; gap: 4px; }
+.chapterActions button { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid #dfe2e9; border-radius: 7px; background: #fff; color: #596070; }
+.chapterActions button:disabled { opacity: .35; }
+.chapters ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.chapters li { display: flex; align-items: center; gap: 10px; min-height: 53px; padding: 7px 13px; border-bottom: 1px solid #f0f1f4; }
+.chapters li:last-child { border-bottom: 0; }
+.chapters li > span { color: #8b909d; font-size: 9px; font-weight: 900; }
+.chapters li > input { min-width: 0; flex: 1; min-height: 35px; padding: 0 9px; border: 1px solid transparent; border-radius: 7px; background: transparent; font: inherit; font-size: 11px; }
+.chapters li > input:not([readonly]):focus { border-color: #8da4f6; outline: none; background: #f5f7ff; }
+.chapters li > div { display: flex; gap: 4px; }
+.chapters li button { display: grid; place-items: center; width: 29px; height: 29px; border: 1px solid #dfe2e9; border-radius: 7px; background: #fff; color: #596070; }
+.chapters li button:disabled { opacity: .35; }
+.addForms { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 16px; }
+.addForms form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; padding: 14px; border: 1px solid #dfe2ea; border-radius: 13px; background: #fff; }
+.addForms h3 { grid-column: 1 / -1; margin: 0 0 4px; font-size: 12px; }
+.center { display: grid; place-items: center; align-content: center; gap: 12px; min-height: 100vh; padding: 25px; background: #f5f6fa; text-align: center; }
+.center h1,
+.center p { margin: 0; }
+.center a { color: #3561ef; font-weight: 900; }
+
+@media (max-width: 880px) {
+  .layout { grid-template-columns: 1fr; }
+  .settings { border-right: 0; border-bottom: 1px solid #dfe2e9; }
+  .addForms { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .header { padding: 0 13px; }
+  .settings,
+  .flowPanel { padding: 20px 12px; }
+  .addForms form { grid-template-columns: 1fr; }
+  .addForms h3 { grid-column: auto; }
+  .chapters li { align-items: flex-start; flex-wrap: wrap; }
+  .chapters li > input { flex-basis: calc(100% - 40px); }
+  .chapters li > div { margin-left: 26px; }
+}

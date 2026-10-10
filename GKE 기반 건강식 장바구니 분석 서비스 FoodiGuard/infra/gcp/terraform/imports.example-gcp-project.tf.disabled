@@ -1,0 +1,119 @@
+# HISTORICAL ONLY: example-gcp-project was deleted. This .disabled file is not loaded
+# by Terraform. Do not copy it to .tf when rebuilding foodigard.
+# Production inventory from 2026-09-19. These imports adopt existing resources;
+# they do not create a parallel cluster, database or alerting stack. The older
+# Jenkins resources are already in the migrated state and are not repeated here.
+import {
+  to = google_storage_bucket.terraform_state
+  id = "example-gcp-project-foodiguard-tfstate"
+}
+
+import {
+  to = google_artifact_registry_repository.docker_repo
+  id = "projects/example-gcp-project/locations/asia-northeast3/repositories/foodiguard-api"
+}
+
+import {
+  to = google_container_cluster.foodiguard
+  id = "projects/example-gcp-project/locations/asia-northeast3/clusters/foodiguard-cluster"
+}
+
+import {
+  to = google_sql_database_instance.postgres[0]
+  id = "projects/example-gcp-project/instances/foodiguard-db"
+}
+
+import {
+  to = google_sql_database.foodiguard[0]
+  id = "projects/example-gcp-project/instances/foodiguard-db/databases/foodiguard"
+}
+
+import {
+  to = google_service_account.foodiguard_api
+  id = "projects/example-gcp-project/serviceAccounts/foodiguard-api-sa@example-gcp-project.iam.gserviceaccount.com"
+}
+
+import {
+  to = google_project_iam_member.foodiguard_api_roles["roles/cloudsql.client"]
+  id = "example-gcp-project roles/cloudsql.client serviceAccount:foodiguard-api-sa@example-gcp-project.iam.gserviceaccount.com"
+}
+
+import {
+  to = google_project_iam_member.foodiguard_api_roles["roles/aiplatform.user"]
+  id = "example-gcp-project roles/aiplatform.user serviceAccount:foodiguard-api-sa@example-gcp-project.iam.gserviceaccount.com"
+}
+
+import {
+  to = google_service_account_iam_member.foodiguard_api_workload_identity
+  id = "projects/example-gcp-project/serviceAccounts/foodiguard-api-sa@example-gcp-project.iam.gserviceaccount.com roles/iam.workloadIdentityUser serviceAccount:example-gcp-project.svc.id.goog[default/foodiguard-api-ksa]"
+}
+
+import {
+  to = google_monitoring_notification_channel.primary
+  id = "projects/example-gcp-project/notificationChannels/9083225703585199989"
+}
+
+import {
+  to = google_monitoring_notification_channel.legacy_team
+  id = "projects/example-gcp-project/notificationChannels/17442675374644271846"
+}
+
+import {
+  to = google_monitoring_dashboard.operations
+  id = "projects/331698691858/dashboards/4925bb36-a681-434b-aae6-b7b2950b9c7e"
+}
+
+import {
+  to = google_monitoring_dashboard.data_quality
+  id = "projects/331698691858/dashboards/bdfe845d-8349-49b5-96a4-affe55377cbe"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["api_5xx"]
+  id = "projects/example-gcp-project/alertPolicies/18292910884479910481"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["api_latency"]
+  id = "projects/example-gcp-project/alertPolicies/18292910884479910158"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["db_latency"]
+  id = "projects/example-gcp-project/alertPolicies/5828093443642506391"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["api_availability"]
+  id = "projects/example-gcp-project/alertPolicies/5828093443642504922"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["container_restart"]
+  id = "projects/example-gcp-project/alertPolicies/18292910884479913608"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["data_freshness"]
+  id = "projects/example-gcp-project/alertPolicies/9853029188766015624"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["data_quality_collection"]
+  id = "projects/example-gcp-project/alertPolicies/16564543512766950727"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["sync_failure"]
+  id = "projects/example-gcp-project/alertPolicies/16564543512766950009"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["ingredient_match_ratio"]
+  id = "projects/example-gcp-project/alertPolicies/10564655419671972704"
+}
+
+import {
+  to = google_monitoring_alert_policy.foodiguard["nutrition_missing_ratio"]
+  id = "projects/example-gcp-project/alertPolicies/18292910884479913585"
+}

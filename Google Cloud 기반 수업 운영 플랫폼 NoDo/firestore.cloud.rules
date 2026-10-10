@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function currentUserPath() {
+      return /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    function currentUserExists() {
+      return isSignedIn() && exists(currentUserPath());
+    }
+
+    function currentUser() {
+      return get(currentUserPath()).data;
+    }
+
+    function canReadOrganization(orgId) {
+      return currentUserExists()
+        && currentUser().uid == request.auth.uid
+        && currentUser().accountType == 'STAFF'
+        && currentUser().isAnonymous == false
+        && currentUser().orgId == orgId;
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn() && request.auth.uid == userId;
+      allow list, create, update, delete: if false;
+    }
+
+    match /organizations/{orgId} {
+      allow get: if canReadOrganization(orgId);
+      allow list, create, update, delete: if false;
+
+      match /auditLogs/{auditLogId} {
+        allow read, write: if false;
+      }
+    }
+
+    match /emulatorChecks/{checkId} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: foodiguard-web
+  labels:
+    app: foodiguard-web
+spec:
+  type: LoadBalancer
+  # Verified in a maintenance window; changing this rebuilds the legacy LB.
+  externalTrafficPolicy: Local
+  selector:
+    app: foodiguard-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

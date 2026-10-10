@@ -1,0 +1,64 @@
+.sessionBar,
+.loginLink {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #d9dde7;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 96%);
+  color: #222633;
+  box-shadow: 0 10px 30px rgb(28 38 69 / 13%);
+  font-size: 12px;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+}
+
+.sessionBar span {
+  display: grid;
+  gap: 1px;
+}
+
+.sessionBar strong {
+  font-size: 13px;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sessionBar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid #d9dde7;
+  border-radius: 9px;
+  background: #fff;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sessionBar button:focus-visible,
+.loginLink:focus-visible {
+  outline: 3px solid rgb(60 96 246 / 32%);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .sessionBar,
+  .loginLink {
+    right: 10px;
+    bottom: 10px;
+    max-width: calc(100vw - 20px);
+  }
+}

@@ -1,0 +1,77 @@
+.page {
+  min-height: 100vh;
+  color: #20242d;
+  background:
+    radial-gradient(circle at 10% 20%, rgb(255 174 42 / 20%), transparent 28%),
+    linear-gradient(135deg, #fafafa 0%, #f2f4f7 100%);
+}
+
+.header {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 5vw, 72px);
+  border-bottom: 1px solid rgb(37 43 54 / 10%);
+  background: rgb(255 255 255 / 82%);
+  backdrop-filter: blur(14px);
+}
+
+.header a { color: inherit; font-size: 24px; font-weight: 900; letter-spacing: -.06em; text-decoration: none; }
+.header a span:first-child { color: #20242d; }
+.header a span:last-child { color: #f59b23; }
+.header > span { color: #697180; font-size: 13px; font-weight: 700; }
+
+.layout {
+  min-height: calc(100vh - 72px);
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, .75fr);
+  gap: clamp(44px, 8vw, 110px);
+  align-items: center;
+  padding: 54px 0;
+}
+
+.intro > p:first-child { color: #b86b08; font-size: 13px; font-weight: 900; letter-spacing: .14em; }
+.intro h1 { margin: 16px 0 22px; font-size: clamp(38px, 5.3vw, 68px); line-height: 1.08; letter-spacing: -.045em; }
+.intro h1 span { color: #ed8c10; }
+.intro > p:not(:first-child) { max-width: 620px; color: #626a78; font-size: 17px; line-height: 1.75; }
+.securityNote { display: flex; gap: 10px; align-items: center; width: fit-content; margin-top: 28px; padding: 13px 16px; border-radius: 12px; color: #37604f; background: #e9f5ef; font-weight: 700; }
+.securityNote svg { width: 20px; flex: 0 0 auto; }
+
+.card { padding: clamp(26px, 4vw, 42px); border: 1px solid #e0e3e8; border-radius: 24px; background: #fff; box-shadow: 0 26px 70px rgb(34 40 50 / 12%); }
+.cardTitle { display: flex; gap: 14px; align-items: center; }
+.cardTitle > svg { width: 42px; height: 42px; padding: 10px; border-radius: 13px; color: #fff; background: #f59b23; }
+.cardTitle p { margin: 0 0 3px; color: #8a6a3f; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.cardTitle h2 { margin: 0; font-size: 27px; }
+.description { margin: 26px 0; color: #646c79; line-height: 1.65; }
+.googleButton { width: 100%; min-height: 52px; display: flex; justify-content: center; align-items: center; gap: 12px; border: 1px solid #cfd4dc; border-radius: 12px; color: #292e37; background: #fff; font: inherit; font-weight: 800; cursor: pointer; transition: border-color .2s, box-shadow .2s, transform .2s; }
+.googleButton:hover:not(:disabled) { border-color: #ed8c10; box-shadow: 0 8px 22px rgb(237 140 16 / 16%); transform: translateY(-1px); }
+.googleButton:focus-visible { outline: 3px solid rgb(245 155 35 / 35%); outline-offset: 3px; }
+.googleButton:disabled { cursor: wait; opacity: .65; }
+.googleMark { display: grid; place-items: center; width: 27px; height: 27px; border: 1px solid #dde0e5; border-radius: 50%; color: #4285f4; font-size: 16px; font-weight: 900; }
+.error { padding: 12px 14px; border-radius: 10px; color: #9a2a2a; background: #fff0ef; line-height: 1.5; }
+.error strong, .error span { display: block; }
+.error span { margin-top: 0.35rem; }
+.processing { margin: 12px 0 0; color: #6d7582; font-size: 13px; line-height: 1.5; text-align: center; }
+.recoveryActions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.secondaryButton { min-height: 44px; border: 1px solid #cfd4dc; border-radius: 10px; color: #3e4653; background: #fff; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
+.secondaryButton:hover { border-color: #ed8c10; color: #a86108; }
+.secondaryButton:focus-visible { outline: 3px solid rgb(245 155 35 / 35%); outline-offset: 3px; }
+.notice { margin: 20px 0 0; color: #7b828e; font-size: 12px; line-height: 1.6; text-align: center; }
+
+@media (max-width: 800px) {
+  .header { height: 64px; }
+  .header > span { display: none; }
+  .layout { min-height: calc(100vh - 64px); grid-template-columns: 1fr; gap: 32px; padding: 36px 0; }
+  .intro h1 { font-size: clamp(36px, 11vw, 52px); }
+  .card { border-radius: 18px; }
+}
+
+@media (max-width: 430px) {
+  .layout { width: min(100% - 24px, 1180px); padding-top: 26px; }
+  .intro > p:not(:first-child) { font-size: 15px; }
+  .securityNote { align-items: flex-start; font-size: 13px; }
+  .recoveryActions { grid-template-columns: 1fr; }
+}

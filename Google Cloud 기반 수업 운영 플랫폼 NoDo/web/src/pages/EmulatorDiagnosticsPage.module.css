@@ -1,0 +1,286 @@
+.page {
+  min-height: 100vh;
+  padding: 48px 24px;
+  color: #1f2937;
+  background:
+    radial-gradient(circle at top right, rgb(111 78 246 / 12%), transparent 34%),
+    #f7f7fb;
+}
+
+.shell {
+  width: min(860px, 100%);
+  margin: 0 auto;
+  padding: 34px;
+  border: 1px solid #e3e0ee;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 22px 60px rgb(38 28 68 / 10%);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #6952d5;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
+  line-height: 1.2;
+}
+
+.header p:last-child {
+  max-width: 620px;
+  margin: 12px 0 0;
+  color: #687083;
+  line-height: 1.65;
+}
+
+.shield {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+  border-radius: 16px;
+  color: #5e46cf;
+  background: #f0edff;
+}
+
+.guardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.guardGrid article {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #ebe9f2;
+  border-radius: 14px;
+  background: #faf9fe;
+}
+
+.guardGrid span,
+.guardGrid strong {
+  display: block;
+}
+
+.guardGrid span {
+  margin-bottom: 6px;
+  color: #777e8f;
+  font-size: 0.78rem;
+}
+
+.guardGrid strong {
+  overflow-wrap: anywhere;
+  color: #39304f;
+  font-size: 0.92rem;
+}
+
+.stepList {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.stepList li {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 16px;
+  border: 1px solid #e8e6ef;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.stepList svg {
+  flex: 0 0 auto;
+  width: 21px;
+  height: 21px;
+  color: #9aa0ad;
+}
+
+.stepList div,
+.stepList strong,
+.stepList span {
+  min-width: 0;
+}
+
+.stepList strong,
+.stepList span {
+  display: block;
+}
+
+.stepList strong {
+  font-size: 0.92rem;
+}
+
+.stepList span {
+  margin-top: 3px;
+  color: #747b8b;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.stepList .running {
+  border-color: #c9befa;
+  background: #faf8ff;
+}
+
+.stepList .running svg {
+  color: #6b50dc;
+}
+
+.stepList .success {
+  border-color: #bce6d0;
+  background: #f4fcf7;
+}
+
+.stepList .success svg {
+  color: #21865a;
+}
+
+.stepList .error {
+  border-color: #f1c7c7;
+  background: #fff7f7;
+}
+
+.stepList .error svg {
+  color: #c54a4a;
+}
+
+.spinner {
+  animation: spin 0.85s linear infinite;
+}
+
+.result {
+  min-height: 52px;
+  margin-top: 20px;
+}
+
+.result > p {
+  margin: 0;
+  color: #6952d5;
+  font-weight: 700;
+}
+
+.successMessage,
+.errorMessage {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 14px;
+}
+
+.successMessage {
+  color: #176b46;
+  background: #edf9f2;
+}
+
+.errorMessage {
+  color: #9f3434;
+  background: #fff0f0;
+}
+
+.successMessage svg,
+.errorMessage svg {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+}
+
+.successMessage strong,
+.successMessage span,
+.errorMessage strong,
+.errorMessage span {
+  display: block;
+}
+
+.successMessage span,
+.errorMessage span {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+.retryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 18px;
+  padding: 0 18px;
+  border: 1px solid #6b50dc;
+  border-radius: 12px;
+  color: #fff;
+  background: #6b50dc;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.retryButton svg {
+  width: 17px;
+  height: 17px;
+}
+
+.retryButton:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.retryButton:focus-visible {
+  outline: 3px solid rgb(107 80 220 / 28%);
+  outline-offset: 3px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 18px 12px;
+  }
+
+  .shell {
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+
+  .shield {
+    width: 40px;
+    height: 40px;
+  }
+
+  .guardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .retryButton {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+

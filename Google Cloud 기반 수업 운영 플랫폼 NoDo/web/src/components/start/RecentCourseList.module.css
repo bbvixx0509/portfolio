@@ -1,0 +1,48 @@
+.list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 1rem 0 1.2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--nodo-border-strong);
+  border-radius: 0.7rem;
+  background: var(--nodo-icon-bg);
+}
+
+.title {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--nodo-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date {
+  color: var(--nodo-muted-soft);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 24rem) {
+  .item {
+    align-items: start;
+  }
+
+  .title {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+}

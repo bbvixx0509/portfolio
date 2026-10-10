@@ -1,0 +1,238 @@
+.page {
+  min-height: 100dvh;
+  padding: 30px clamp(18px, 4vw, 56px) 72px;
+  background: var(--nodo-bg, #fcf7e9);
+  color: var(--nodo-text, #172f43);
+  font-family: Pretendard, "Noto Sans KR", sans-serif;
+}
+
+.backRow,
+.page > h1,
+.page > p,
+.page > ul,
+.errorState {
+  width: min(100%, 1120px);
+  margin-inline: auto;
+}
+
+.backRow {
+  display: flex;
+}
+
+.backRow a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 36px;
+  padding: 0 11px;
+  border: 1px solid rgb(21 94 143 / 25%);
+  border-radius: 8px;
+  background: #fffdf8;
+  color: #155e8f;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.backRow svg {
+  width: 15px;
+  height: 15px;
+}
+
+.page h1 {
+  margin-top: 28px;
+  margin-bottom: 7px;
+  color: #172f43;
+  font-size: clamp(30px, 3vw, 40px);
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+}
+
+.page > p {
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: #627887;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.page ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.page li {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) auto auto minmax(310px, auto);
+  gap: 12px 18px;
+  align-items: center;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid rgb(21 94 143 / 17%);
+  border-radius: 10px;
+  background: #fffdf8;
+}
+
+.page li > strong {
+  min-width: 0;
+  overflow: hidden;
+  color: #1c374c;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page li > span {
+  color: #617787;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.page li > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
+}
+
+.page button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  margin: 0;
+  padding: 0 10px;
+  border: 1px solid rgb(21 94 143 / 24%);
+  border-radius: 7px;
+  background: #fff;
+  color: #155e8f;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.page li > div > button:last-child {
+  min-width: 58px;
+  border-color: #155e8f;
+  background: #155e8f;
+  color: #fff;
+}
+
+.page button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+.page input {
+  width: 64px;
+  min-height: 36px;
+  padding: 0 7px;
+  border: 1px solid rgb(21 94 143 / 24%);
+  border-radius: 7px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  text-align: right;
+}
+
+.errorState {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border: 1px solid #e2b5bb;
+  border-radius: 8px;
+  background: #fff7f7;
+  color: #983744;
+}
+
+.errorState p {
+  margin: 0;
+}
+
+.errorState button {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.backRow a:hover,
+.page button:hover:not(:disabled) {
+  border-color: #155e8f;
+}
+
+.backRow a:focus-visible,
+.page button:focus-visible,
+.page input:focus-visible {
+  outline: 3px solid rgb(21 94 143 / 22%);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1040px) {
+  .page li {
+    grid-template-columns: minmax(150px, 1fr) auto auto;
+  }
+
+  .page li > div {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    padding-top: 10px;
+    border-top: 1px solid rgb(21 94 143 / 12%);
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 24px 14px 52px;
+  }
+
+  .page h1 {
+    margin-top: 22px;
+    font-size: 30px;
+  }
+
+  .page li {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 15px;
+  }
+
+  .page li > span {
+    white-space: normal;
+  }
+
+  .page li > div {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 7px;
+    padding-top: 12px;
+  }
+
+  .page li > div > button,
+  .page li > div > input {
+    width: 100%;
+  }
+
+  .page li > div > input {
+    grid-column: 1 / span 2;
+  }
+
+  .page li > div > button:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .errorState {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .errorState button {
+    margin-left: 0;
+  }
+}

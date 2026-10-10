@@ -1,0 +1,124 @@
+pipeline {
+  agent any
+
+  options {
+    disableConcurrentBuilds()
+  }
+
+  triggers {
+    pollSCM('H/5 * * * *')
+  }
+
+  environment {
+    PROJECT_ID = 'foodigard'
+    REGION = 'asia-northeast3'
+    CLUSTER_NAME = 'foodiguard-cluster'
+    ARTIFACT_REPOSITORY = 'foodiguard-api'
+    IMAGE_TAG = "${env.BUILD_NUMBER}"
+    WEB_IMAGE_URI = "${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/foodiguard-web:${IMAGE_TAG}"
+    API_IMAGE_URI = "${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/foodiguard-backend:${IMAGE_TAG}"
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+        sh 'test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"'
+      }
+    }
+
+    stage('Build Docker Images') {
+      steps {
+        sh 'docker build -t ${WEB_IMAGE_URI} .'
+        sh 'docker build -f backend/Dockerfile -t ${API_IMAGE_URI} backend'
+      }
+    }
+
+    stage('Regression Tests') {
+      steps {
+        sh 'docker run --rm -v "${WORKSPACE}:/workspace:ro" -w /workspace ${API_IMAGE_URI} node --test "infra/tests/*.test.mjs"'
+        sh 'docker run --rm ${API_IMAGE_URI} npm test'
+        sh 'docker run --rm -v "${WORKSPACE}/mobile:/tests:ro" -w /tests ${API_IMAGE_URI} node --test "src/**/*.test.js"'
+      }
+    }
+
+    stage('Push Images') {
+      steps {
+        sh 'gcloud auth configure-docker ${REGION}-docker.pkg.dev --quiet'
+        sh 'docker push ${WEB_IMAGE_URI}'
+        sh 'docker push ${API_IMAGE_URI}'
+      }
+    }
+
+    stage('Prepare GKE') {
+      steps {
+        sh '''
+          gcloud config set project ${PROJECT_ID}
+          gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${REGION}
+          kubectl apply -f k8s/backend-service-account.yaml
+
+          # Jenkins sh uses xtrace; never echo expanded Secret values.
+          set +x
+          kubectl get secret foodiguard-db-secret -o name
+          for key in DB_NAME DB_USER DB_PASSWORD; do
+            test -n "$(kubectl get secret foodiguard-db-secret -o jsonpath="{.data.${key}}")"
+          done
+          kubectl get secret foodiguard-auth-secret -o name
+          test -n "$(kubectl get secret foodiguard-auth-secret -o jsonpath='{.data.AUTH_TOKEN_SECRET}')"
+          set -x
+        '''
+      }
+    }
+
+    stage('Migrate Database') {
+      steps {
+        sh '''
+          kubectl delete job foodiguard-db-migrate --ignore-not-found=true
+          sed "s|BACKEND_IMAGE_PLACEHOLDER|${API_IMAGE_URI}|g" k8s/migration-job.yaml | kubectl apply -f -
+          wait_for_job() {
+            job_name="$1"
+            timeout_seconds="$2"
+            elapsed=0
+            while [ "${elapsed}" -lt "${timeout_seconds}" ]; do
+              conditions="$(kubectl get job "${job_name}" -o jsonpath='{range .status.conditions[*]}{.type}={.status}{" "}{end}' 2>/dev/null || true)"
+              case "${conditions}" in
+                *Complete=True*) return 0 ;;
+                *Failed=True*) return 1 ;;
+              esac
+              sleep 10
+              elapsed=$((elapsed + 10))
+            done
+            return 1
+          }
+          wait_for_job foodiguard-db-migrate 1200 || {
+            kubectl logs job/foodiguard-db-migrate -c foodiguard-db-migrate || true
+            kubectl describe job foodiguard-db-migrate || true
+            exit 1
+          }
+          kubectl logs job/foodiguard-db-migrate -c foodiguard-db-migrate
+        '''
+      }
+    }
+
+    stage('Deploy to GKE') {
+      steps {
+        sh 'sed "s|BACKEND_IMAGE_PLACEHOLDER|${API_IMAGE_URI}|g" k8s/backend-deployment.yaml | kubectl apply -f -'
+        sh 'kubectl apply -f k8s/backend-hpa.yaml -f k8s/backend-pdb.yaml'
+        sh 'kubectl rollout status deployment/foodiguard-api --timeout=10m'
+        sh 'kubectl apply -f k8s/backend-service.yaml'
+        sh 'kubectl apply -f k8s/pod-monitoring.yaml'
+        sh 'sed "s|IMAGE_PLACEHOLDER|${WEB_IMAGE_URI}|g" k8s/deployment.yaml | kubectl apply -f -'
+        sh 'kubectl apply -f k8s/web-pdb.yaml'
+        sh 'kubectl rollout status deployment/foodiguard-web --timeout=10m'
+        sh 'kubectl apply -f k8s/service.yaml'
+        sh 'sed "s|BACKEND_IMAGE_PLACEHOLDER|${API_IMAGE_URI}|g" k8s/allergen-projection-cronjob.yaml | kubectl apply -f -'
+      }
+    }
+  }
+
+  post {
+    always {
+      sh 'docker image prune -f || true'
+    }
+  }
+}
