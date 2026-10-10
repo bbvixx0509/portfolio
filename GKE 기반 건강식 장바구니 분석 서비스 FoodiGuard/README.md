@@ -21,7 +21,11 @@ FoodiGuard는 식품을 검색하거나 장바구니에 담으면 영양성분�
 - **점수·추천 로직**: 새 식품 DB 스키마에 맞춰 원재료·알레르기 기능을 연결하고, 점수 등급을 5단계로 조정했습니다. 가중합 방식이던 추천기를 **하드 필터 + 점수 정렬** 방식으로 바꾸고, 대체식품 API와 카테고리 단계별 대체 로직을 만들었습니다.
 - **배포**: 컨테이너 빌드를 고치고 Docker Compose 배포 구성을 추가했습니다. 관리형 PostgreSQL 지원과 작은 인스턴스에서도 버티는 헬스체크를 만들었습니다.
 - **검색 성능**: 앱이 실제로 거치는 DB 뷰에서 **부분 인덱스가 한 번도 쓰이지 않던 문제**를 찾아 고쳤습니다. 기본 목록 응답이 운영 환경에서 361ms → 24ms(약 15배)로 줄었습니다.
-- **관측성·운영**: API에 Prometheus 메트릭을 노출하고 GKE 관리형 수집을 연결했습니다. 알림 정책과 비용 라벨을 Terraform으로 관리하도록 옮기고, 데이터 적재 중단·데이터 노후화 알림을 추가했습니다.
+- **인프라 코드(Terraform)**:
+  - 콘솔에서 따로 관리하던 Cloud Monitoring 알림 정책을 Terraform 코드(`monitoring.tf`)로 옮겼습니다. GKE·Cloud SQL·Artifact Registry·Jenkins VM에는 비용 추적용 라벨을 붙였습니다.
+  - 서비스가 죽는 것만이 아니라 **데이터가 오래되는 것**도 보이도록 데이터 품질 대시보드(`monitoring_dashboard.tf`)와 적재 중단 알림을 추가했습니다.
+  - 배포를 새 GCP 프로젝트로 옮기면서 프로젝트 의존 값을 변수로 분리하고, 파드가 키 파일 없이 GCP 서비스 계정 권한을 쓰도록 **Workload Identity**(`workload_identity.tf`)를 구성했습니다.
+- **관측성**: API에 Prometheus 메트릭을 노출하고 GKE 관리형 수집(`PodMonitoring`)을 연결했습니다. 트래픽이 없을 때도 지표가 끊기지 않도록 합성 트래픽 파드를 추가했습니다.
 - **SRE 검증**: 알림·부하·통제된 장애 실험 결과를 기록했습니다.
 - **개인정보**: 건강 정보를 저장하기 전에 명시적 동의를 받는 화면과 프로필 소유권 검증을 추가했습니다.
 
@@ -40,10 +44,36 @@ GitHub ──▶ Jenkins VM (Compute Engine)
               │
               ├─▶ Cloud SQL PostgreSQL 17 (pg_trgm)
               ├─▶ Vertex AI Gemini (장바구니 AI 코치 설명)
-              └─▶ Cloud Monitoring / Managed Prometheus (알림 7종)
+              └─▶ Cloud Monitoring / Managed Prometheus (알림 정책 10종)
 ```
 
 자세한 구조는 [docs/gcp-architecture.md](./docs/gcp-architecture.md)에 정리되어 있습니다.
+
+## 인프라 코드 (Terraform) · CI/CD
+
+GCP 리소스는 콘솔에서 손으로 만들지 않고 `infra/gcp/terraform/`의 Terraform 코드로 관리합니다. 상태 파일은 GCS 원격 백엔드에 둡니다.
+
+| 파일 | 관리하는 리소스 |
+| --- | --- |
+| `services.tf` | 프로젝트에서 사용할 GCP API 활성화 |
+| `state_bucket.tf`, `versions.tf` | Terraform 상태 저장용 GCS 버킷과 원격 백엔드 |
+| `network.tf` | 방화벽 규칙 |
+| `gke.tf` | GKE Autopilot 클러스터, 노드 서비스 계정, Artifact Registry 읽기 권한 |
+| `artifact_registry.tf` | 컨테이너 이미지 저장소 |
+| `cloud_sql_optional.tf` | Cloud SQL PostgreSQL 인스턴스와 데이터베이스 |
+| `iam.tf`, `workload_identity.tf` | 서비스 계정, 최소 권한 IAM, Workload Identity 연결 |
+| `jenkins_vm.tf` | Jenkins VM(Compute Engine)과 고정 IP, 시작 스크립트 |
+| `monitoring.tf`, `monitoring_dashboard.tf`, `monitoring_channels.tf` | 알림 정책 10종, 운영·데이터 품질 대시보드, 알림 채널 |
+
+배포는 `Jenkinsfile`이 맡습니다. 이미지 빌드 → Artifact Registry 푸시 → DB 마이그레이션 Job 실행 → 마이그레이션이 성공한 경우에만 GKE 배포 갱신 순서로 진행합니다. 쿠버네티스 매니페스트는 `k8s/`에 있습니다.
+
+| 매니페스트 | 역할 |
+| --- | --- |
+| `backend-deployment.yaml`, `deployment.yaml` | API·웹 Deployment (API 파드에 Cloud SQL Proxy 사이드카) |
+| `backend-hpa.yaml` | API 오토스케일링 (최소 2 · 최대 4) |
+| `backend-pdb.yaml`, `web-pdb.yaml` | 노드 교체·업데이트 중에도 최소 1개 파드 유지 |
+| `migration-job.yaml`, `data-sync-job.yaml`, `allergen-projection-cronjob.yaml` | 스키마 마이그레이션, 식품 데이터 동기화, 알레르기 집계 배치 |
+| `pod-monitoring.yaml`, `synthetic-traffic.yaml` | Prometheus 수집 설정, 합성 트래픽 |
 
 ## 핵심 기능
 
