@@ -25,6 +25,7 @@ FoodiGuard는 식품을 검색하거나 장바구니에 담으면 영양성분�
   - 콘솔에서 따로 관리하던 Cloud Monitoring 알림 정책을 Terraform 코드(`monitoring.tf`)로 옮겼습니다. GKE·Cloud SQL·Artifact Registry·Jenkins VM에는 비용 추적용 라벨을 붙였습니다.
   - 서비스가 죽는 것만이 아니라 **데이터가 오래되는 것**도 보이도록 데이터 품질 대시보드(`monitoring_dashboard.tf`)와 적재 중단 알림을 추가했습니다.
   - 배포를 새 GCP 프로젝트로 옮기면서 프로젝트 의존 값을 변수로 분리하고, 파드가 키 파일 없이 GCP 서비스 계정 권한을 쓰도록 **Workload Identity**(`workload_identity.tf`)를 구성했습니다.
+- **CI/CD·쿠버네티스**: 팀원과 함께 Jenkins 파이프라인(빌드 → 이미지 푸시 → DB 마이그레이션 → 배포)과 GKE 배포 설정(오토스케일링, PDB, 마이그레이션·배치 Job)을 구성하고 운영했습니다. 그중 저는 API 배포 설정(`backend-deployment.yaml`, `migration-job.yaml`) 수정과 새 GCP 프로젝트로의 배포 이전을 맡았습니다.
 - **관측성**: API에 Prometheus 메트릭을 노출하고 GKE 관리형 수집(`PodMonitoring`)을 연결했습니다. 트래픽이 없을 때도 지표가 끊기지 않도록 합성 트래픽 파드를 추가했습니다.
 - **SRE 검증**: 알림·부하·통제된 장애 실험 결과를 기록했습니다.
 - **개인정보**: 건강 정보를 저장하기 전에 명시적 동의를 받는 화면과 프로필 소유권 검증을 추가했습니다.
