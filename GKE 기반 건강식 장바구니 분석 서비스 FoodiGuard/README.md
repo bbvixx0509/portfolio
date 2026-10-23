@@ -135,6 +135,11 @@ API 파드를 강제로 삭제하고 외부 진입점을 0.5초 간격으로 호
 
 ## 실행 화면
 
+| 식품 상세 | 대체식품 추천 | 장바구니 분석 (교체 전) | 장바구니 분석 (교체 후) |
+| --- | --- | --- | --- |
+| <img src="./docs/images/app-product-detail.png" width="200" alt="식품 상세 화면: 식품 점수 50.0점과 나트륨 상한 적용 같은 감점 이유, 영양성분"> | <img src="./docs/images/app-alternative.png" width="200" alt="대체식품 추천 화면: 같은 분류에서 점수가 더 높은 식품으로 교체 제안, 50.0점에서 89.9점"> | <img src="./docs/images/app-cart-before.png" width="200" alt="장바구니 분석 화면: 장바구니 영양 점수 66.6점(보통)과 누적 영양량"> | <img src="./docs/images/app-cart-after.png" width="200" alt="대체식품으로 교체한 뒤 장바구니 영양 점수 79.9점(매우 좋음)"> |
+| 점수와 감점 이유를 함께 보여줍니다 | 같은 분류에서 점수가 더 높은 식품을 제안합니다 | 담은 식품의 영양을 합산해 점수를 매깁니다 | 추천 식품으로 바꾸면 66.6점 → 79.9점 |
+
 | 개인정보·건강정보 동의 | 온보딩 (기본 정보) |
 | --- | --- |
 | <img src="./docs/irb-screens/05-동의완료.png" width="300"> | <img src="./docs/irb-screens/06-동의후-온보딩.png" width="300"> |
