@@ -46,21 +46,10 @@ FoodiGuard는 식품을 검색하거나 장바구니에 담으면 영양성분�
 
 ## 시스템 구조
 
-```text
-GitHub ──▶ Jenkins VM (Compute Engine)
-              │  이미지 빌드 · Artifact Registry 푸시
-              │  DB 마이그레이션 Job 실행 후 배포 갱신
-              ▼
-         GKE Autopilot (asia-northeast3)
-           ├─ foodiguard-web  (Nginx + 웹 빌드, LoadBalancer)
-           ├─ foodiguard-api  (Express API + Cloud SQL Proxy 사이드카)
-           ├─ 마이그레이션 Job · 데이터 동기화 Job · 알레르기 집계 CronJob
-           └─ HPA · PodDisruptionBudget · PodMonitoring
-              │
-              ├─▶ Cloud SQL PostgreSQL 17 (pg_trgm)
-              ├─▶ Vertex AI Gemini (장바구니 AI 코치 설명)
-              └─▶ Cloud Monitoring / Managed Prometheus (알림 정책 10종)
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./docs/images/architecture-dark.png">
+  <img src="./docs/images/architecture.png" alt="FoodiGuard 시스템 구조: GitHub에서 Jenkins VM이 이미지를 빌드해 Artifact Registry에 푸시하고, 마이그레이션 Job 성공 후 GKE Autopilot에 배포합니다. GKE 안에는 foodiguard-web(Nginx), foodiguard-api(Express와 Cloud SQL Proxy), 배치 작업, HPA·PDB·PodMonitoring이 있고, API는 Cloud SQL과 Vertex AI를, PodMonitoring은 Cloud Monitoring을 사용합니다. 인프라는 Terraform으로 관리합니다." width="900">
+</picture>
 
 자세한 구조는 [docs/gcp-architecture.md](./docs/gcp-architecture.md)에 정리되어 있습니다.
 
@@ -110,7 +99,21 @@ GCP 리소스는 콘솔에서 손으로 만들지 않고 `infra/gcp/terraform/`�
 
 ## 운영 검증 결과
 
+### 인덱스 수정 전후
+
+앱이 거치는 DB 뷰가 노출하는 표현식과 부분 인덱스의 조건이 어긋나, 플래너가 인덱스를 한 번도 쓰지 않고 있었습니다. 조건을 뷰와 같은 모양으로 맞춘 뒤 다시 측정한 결과입니다.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./docs/images/index-fix-dark.png">
+  <img src="./docs/images/index-fix.png" alt="인덱스 수정 전후 운영 환경 응답 시간 중앙값: 기본 목록 361ms에서 24ms(15배), 테마 정렬 348ms에서 21ms(17배), 알레르기 제외 529ms에서 180ms(2.9배), 키워드 검색 390ms에서 305ms(1.3배)" width="900">
+</picture>
+
 ### 부하 테스트 (동시성 10, 시나리오당 45초)
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./docs/images/load-test-dark.png">
+  <img src="./docs/images/load-test.png" alt="부하 테스트 결과: 처리량은 기본 목록 106.0, 키워드 검색 3.2, 알레르기 제외 5.1 요청/초, p95는 각각 117ms, 3,792ms, 3,520ms. 부하 중 CPU는 API 파드 0.035코어, Cloud SQL 약 0.91코어(1 vCPU의 91%)" width="900">
+</picture>
 
 | 시나리오 | RPS | p95 | 오류율 |
 | --- | --- | --- | --- |
@@ -131,6 +134,11 @@ API 파드를 강제로 삭제하고 외부 진입점을 0.5초 간격으로 호
 자세한 기록은 [docs/sre-validation.md](./docs/sre-validation.md), [docs/performance.md](./docs/performance.md)에 있습니다.
 
 ## 실행 화면
+
+| 식품 상세 | 대체식품 추천 | 장바구니 분석 (교체 전) | 장바구니 분석 (교체 후) |
+| --- | --- | --- | --- |
+| <img src="./docs/images/app-product-detail.png" width="200" alt="식품 상세 화면: 식품 점수 50.0점과 나트륨 상한 적용 같은 감점 이유, 영양성분"> | <img src="./docs/images/app-alternative.png" width="200" alt="대체식품 추천 화면: 같은 분류에서 점수가 더 높은 식품으로 교체 제안, 50.0점에서 89.9점"> | <img src="./docs/images/app-cart-before.png" width="200" alt="장바구니 분석 화면: 장바구니 영양 점수 66.6점(보통)과 누적 영양량"> | <img src="./docs/images/app-cart-after.png" width="200" alt="대체식품으로 교체한 뒤 장바구니 영양 점수 79.9점(매우 좋음)"> |
+| 점수와 감점 이유를 함께 보여줍니다 | 같은 분류에서 점수가 더 높은 식품을 제안합니다 | 담은 식품의 영양을 합산해 점수를 매깁니다 | 추천 식품으로 바꾸면 66.6점 → 79.9점 |
 
 | 개인정보·건강정보 동의 | 온보딩 (기본 정보) |
 | --- | --- |
