@@ -21,7 +21,7 @@
 
 | 리소스 | 라벨 |
 |---|---|
-| GKE 클러스터 | `app=foodiguard` `env=capstone` `component=runtime` |
+| GKE 클러스터 | `app=foodiguard` `env=prod` `component=runtime` |
 | Cloud SQL | `component=database` |
 | Artifact Registry | `component=registry` |
 | Jenkins VM | `component=ci` |

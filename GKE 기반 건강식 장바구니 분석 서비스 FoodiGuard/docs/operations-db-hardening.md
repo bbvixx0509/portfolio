@@ -4,7 +4,7 @@
 
 ## 범위와 현재 상태
 
-기준: `rudans601/26-1_CloudCapstone` main `472e43ca77e0c576bc0927d7d3d266ceab11501a`.
+기준: 팀 저장소 main `472e43ca77e0c576bc0927d7d3d266ceab11501a`.
 작업 브랜치: `rudans61/operations-db-hardening`.
 
 - Cloud SQL `foodiguard-db`: RUNNABLE, PostgreSQL 17, 1 vCPU/3.75 GiB, PD_SSD, 식품 79,041건.
@@ -80,7 +80,7 @@
 
 - 과거 `backend/scripts/import-naver-csv.js`가 `naver_ingredients_v3.csv`, `naver_nutrition_v1.csv`를 읽어 원본 테이블에 넣었다.
 - 커밋 `42230abc763e0c398a55f9dd859033e4d4f6f178`(2026-08-17)에서 입력 CSV가 없어진 미사용 파이프라인이라는 이유로 제거됐다.
-- 로컬의 `tmp/cloud-capstone1-gb-matching/backend/data/`에는 이전 CSV 사본 두 개가 남아 있다. 이 파일이 최신 원본이라는 증거는 없다.
+- 로컬의 `tmp/gb-matching/backend/data/`에는 이전 CSV 사본 두 개가 남아 있다. 이 파일이 최신 원본이라는 증거는 없다.
 - 이전 스크립트는 원본 테이블을 TRUNCATE 후 COMMIT하고 파일을 읽는다. 입력 오류/실패 시 빈 테이블·부분 적재가 남을 수 있으므로 그대로 복원하거나 운영에서 실행하지 않았다.
 - 현재 main에 외부 원본을 새로 수집하는 스크립트가 없는 것은 확인했다. 별도 팀원 PC/다른 시스템의 존재 여부는 미확인이다.
 - 향후에는 입력 존재·해시·스키마 검증 → staging 적재 → 품질 검증 → 안정적 키 기반 upsert → 원재료 연결/정규화 → 성공 커서 기록으로 구현해야 한다. 신뢰할 원본 공급처와 최신 파일을 먼저 확정한다.

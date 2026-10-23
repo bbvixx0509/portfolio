@@ -193,7 +193,7 @@ variable "resource_labels" {
   type        = map(string)
   default = {
     app = "foodiguard"
-    env = "capstone"
+    env = "prod"
   }
 }
 

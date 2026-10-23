@@ -65,14 +65,14 @@ if (action === 'plugins') {
 <keepDependencies>false</keepDependencies><properties/>
 <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps">
 <scm class="hudson.plugins.git.GitSCM" plugin="git"><configVersion>2</configVersion>
-<userRemoteConfigs><hudson.plugins.git.UserRemoteConfig><url>https://github.com/rudans601/26-1_CloudCapstone.git</url></hudson.plugins.git.UserRemoteConfig></userRemoteConfigs>
+<userRemoteConfigs><hudson.plugins.git.UserRemoteConfig><url>https://github.com/your-org/foodiguard.git</url></hudson.plugins.git.UserRemoteConfig></userRemoteConfigs>
 <branches><hudson.plugins.git.BranchSpec><name>*/main</name></hudson.plugins.git.BranchSpec></branches>
 <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations><submoduleCfg class="empty-list"/><extensions/>
 </scm><scriptPath>Jenkinsfile</scriptPath><lightweight>true</lightweight></definition><triggers/><disabled>false</disabled></flow-definition>`;
   await request('/createItem?name=foodiguard-main', { method: 'POST', headers: { 'Content-Type': 'application/xml' }, body: xml });
   console.log('foodiguard-main pipeline created; build not yet started.');
 } else if (action === 'deploy-key') {
-  const repository = 'rudans601/26-1_CloudCapstone';
+  const repository = 'your-org/foodiguard';
   const credentialId = 'foodigard-github-readonly';
   const oldUrl = `https://github.com/${repository}.git`;
   const sshUrl = `git@github.com:${repository}.git`;

@@ -1,6 +1,6 @@
 # FoodiGuard GCP Architecture
 
-This document describes the deployed GCP architecture used for the FoodiGuard cloud capstone demo.
+This document describes the deployed GCP architecture used for the FoodiGuard demo.
 
 > Note: This repository contains the deployed FoodiGuard frontend/backend source. The cloud architecture uses containerized workloads on GKE, Cloud SQL PostgreSQL, Artifact Registry, Jenkins, and Vertex AI.
 

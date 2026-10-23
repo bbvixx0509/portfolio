@@ -5,7 +5,7 @@
 
 ## 완료된 작업
 
-- 사용자 승인 후 [PR #5](https://github.com/rudans601/26-1_CloudCapstone/pull/5)를 main에 병합했다.
+- 사용자 승인 후 팀 저장소 PR #5를 main에 병합했다.
 - main 병합 커밋: `270dfdd48b6649d0697aef24a3e2b1bfa19aafde`, 구현 커밋: `b278db0ac135bab66dc43cbd0c41b90bb6341a15`.
 - Cloud SQL `foodiguard-db`의 주문형 백업 `1788867291268`이 `SUCCESSFUL`로 완료됐다. 완료 시각: 2026-09-08 20:36:22 KST. DB를 비우거나 CSV를 다시 가져오지 않았다.
 - 승인받은 수신자 2명의 email notification channel을 생성하고 enabled 상태를 확인했다. 이메일 주소 자체는 저장소에 기록하지 않는다.
@@ -27,7 +27,7 @@ alert_notification_channels = [
 
 2026-09-08 현재 Job `foodiguard-gke-deploy`의 저장된 설정:
 
-- 저장소: `https://github.com/rudans601/26-1_CloudCapstone.git`
+- 저장소: 팀 저장소 (비공개)
 - 브랜치: `*/main`, Script Path: `Jenkinsfile`, Poll SCM: `H/5 * * * *`
 - 마지막 완료 빌드: #4, SUCCESS. 마지막 실제 checkout은 `rudans61/kubernetes-sre`, 커밋 `3d80ae88bc4313a4801770bc9f4fa90dc7deaa90`.
 - 2026-09-08 20:32 KST polling log는 여전히 위 예전 브랜치를 비교하고 `No changes`로 끝났다.
@@ -40,7 +40,7 @@ Jenkins VM SSH/IAP와 Docker는 정상이다. 사용자가 기존 Jenkins 계정
 
 ## 최초 main 배포 검증 완료
 
-[PR #6](https://github.com/rudans601/26-1_CloudCapstone/pull/6) 병합 커밋 `75f12e9205565bbe66d52805c0d4ca9a12c6e392`로 Jenkins #5를 수동 실행했다. 2026-09-08 20:59:15~21:06:01 KST, 6분 46초, **SUCCESS**.
+팀 저장소 PR #6 병합 커밋 `75f12e9205565bbe66d52805c0d4ca9a12c6e392`로 Jenkins #5를 수동 실행했다. 2026-09-08 20:59:15~21:06:01 KST, 6분 46초, **SUCCESS**.
 
 - Console Output의 실제 결과: 백엔드 78/78, 모바일 40/40, 실패·skip 0. Secret 검사에서는 리소스 이름만 출력되고 값은 출력되지 않았다.
 - API·웹 이미지 `:5`가 Artifact Registry에 push되고 두 Deployment 각각 1/1 Available, Pod 재시작 0으로 배포됐다.
