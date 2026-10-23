@@ -21,7 +21,7 @@ resource "google_monitoring_notification_channel" "legacy_team" {
   description  = "FoodiGuard 운영 장애 및 복구 경보"
   type         = "email"
   labels = {
-    email_address = "bbvixx0509@gmail.com"
+    email_address = "admin@example.com"
   }
 
   lifecycle {

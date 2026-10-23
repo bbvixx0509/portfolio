@@ -60,12 +60,12 @@ import {
 
 import {
   to = google_monitoring_dashboard.operations
-  id = "projects/331698691858/dashboards/4925bb36-a681-434b-aae6-b7b2950b9c7e"
+  id = "projects/000000000000/dashboards/4925bb36-a681-434b-aae6-b7b2950b9c7e"
 }
 
 import {
   to = google_monitoring_dashboard.data_quality
-  id = "projects/331698691858/dashboards/bdfe845d-8349-49b5-96a4-affe55377cbe"
+  id = "projects/000000000000/dashboards/bdfe845d-8349-49b5-96a4-affe55377cbe"
 }
 
 import {

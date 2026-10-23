@@ -29,7 +29,7 @@ const run = (cmd, args, options = {}) => {
   if (result.status !== 0) throw new Error(`${cmd} failed (${result.status}).`);
 };
 if (action === 'sql-password') {
-  const token = execFileSync('gcloud', ['auth', 'print-access-token', '--account=rudans0601@gmail.com'], { encoding: 'utf8' }).trim();
+  const token = execFileSync('gcloud', ['auth', 'print-access-token', '--account=admin@example.com'], { encoding: 'utf8' }).trim();
   const api = async (url, options = {}) => {
     const response = await fetch(url, {
       ...options, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
