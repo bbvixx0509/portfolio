@@ -1,6 +1,6 @@
 # Google Cloud 기반 수업 운영 플랫폼 NoDo
 
-인턴십 기간에 진행한 **Google Cloud 교과 연계 산학 팀 프로젝트**입니다.  
+인턴십 기간에 진행한 **Google Cloud 산학 팀 프로젝트**입니다.  
 강사가 강의 자료(PDF·PPTX)를 올리면 AI가 수업 로드맵 초안을 만들고, 학생은 공유 링크로 입장해 현재 진행 위치와 다음 활동을 보면서 질문할 수 있는 **AI 기반 수업 로드맵 및 실시간 강의 운영 플랫폼**입니다.
 
 프론트엔드가 클라우드 저장소에 직접 접근하지 않는 **React → FastAPI → Google Cloud** 구조로 만들고, Cloud Run·Firestore·Cloud Storage·Vertex AI를 사용하는 서버리스 서비스로 배포했습니다.
