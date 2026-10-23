@@ -1,5 +1,5 @@
 project_id     = "foodigard"
-project_number = "578921433841"
+project_number = "000000000000"
 region         = "asia-northeast3"
 zone           = "asia-northeast3-a"
 
@@ -24,7 +24,7 @@ jenkins_instance_name         = "jenkins-vm"
 jenkins_static_ip_name        = "jenkins-static-ip"
 jenkins_firewall_rule_name    = "allow-jenkins-iap"
 jenkins_service_account_id    = "foodiguard-jenkins"
-jenkins_admin_user_email      = "rudans0601@gmail.com"
+jenkins_admin_user_email      = "admin@example.com"
 
 # Enable after DB restore and API/Web health verification.
 alerts_enabled = false

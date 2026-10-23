@@ -1,6 +1,6 @@
 # 성능 개선 — 검색 조회 경로
 
-`rudans61/performance-tuning` 브랜치의 근거와 측정값을 남긴다.
+팀 저장소 `performance-tuning` 브랜치의 근거와 측정값을 남긴다.
 
 ## 측정 환경
 
