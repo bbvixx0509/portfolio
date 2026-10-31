@@ -16,7 +16,8 @@ Jenkins CI/CD, Terraform, Managed Prometheus 알림을 갖추고, 쓰이지 않�
 
 ### [Google Cloud 기반 수업 운영 플랫폼 NoDo](./Google%20Cloud%20기반%20수업%20운영%20플랫폼%20NoDo)
 React → FastAPI(Cloud Run) → Firestore·Cloud Storage·Vertex AI 구조로 만든 AI 수업 로드맵·실시간 강의 운영 플랫폼입니다.  
-권한, 개인정보, 용량 예약, 데이터 수명주기를 서버에서 일관되게 처리하도록 설계한 Google Cloud 산학 프로젝트입니다.
+권한, 개인정보, 용량 예약, 데이터 수명주기를 서버에서 일관되게 처리하도록 설계한 Google Cloud 산학 프로젝트입니다.  
+k6로 실제 운영 API에 80명 순차 입장 시험을 해 입장 API p95 약 243ms를 확인했고, 프론트엔드 504개·백엔드 456개 테스트가 통과합니다.
 
 ### [LangGraph 기반 식단 추천 AI 에이전트](./LangGraph%20기반%20식단%20추천%20AI%20에이전트)
 LangGraph와 Gemini로 자연어 식단 요청을 해석하고, 약 4만 건의 식품 데이터에서 Python 로직으로 후보를 계산해 추천 근거와 함께 보여주는 AI 에이전트입니다.  
