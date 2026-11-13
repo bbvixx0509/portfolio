@@ -39,3 +39,5 @@ go build -o nodoctl .
 ## 백엔드와 규칙이 어긋나지 않게
 
 `TestBackendConstantsMatch`가 `config.py`의 고정값(프로젝트, 버킷, CORS 출처, 에뮬레이터 주소, 직원 이메일 도메인)을 읽어 이 도구의 값과 비교합니다. 백엔드 값만 바꾸고 이 도구를 고치지 않으면 테스트가 실패합니다.
+
+`TestParityWithBackend`는 24개 설정 상황마다 실제 백엔드 검사(`config.py`)와 `nodoctl`을 함께 돌려, 통과·차단 여부와 오류 메시지가 같은지 비교합니다. 정상 설정, 다른 버킷·프로젝트, 남아 있는 에뮬레이터 변수, 서비스 계정 키 파일, 허용되지 않은 CORS 출처, 잘못된 값 형식 등을 다룹니다. 백엔드 쪽은 [`testdata/backend_check.py`](./testdata/backend_check.py)가 표준 라이브러리만으로 실행하며, Python 3.9 이상이 없으면 이 테스트는 건너뜁니다.

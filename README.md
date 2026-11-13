@@ -7,7 +7,7 @@
 - **FoodiGuard**: GKE에서 API 파드를 강제로 삭제하는 장애 실험으로 약 4초 정지를 확인해 기록했고, 이 결과를 바탕으로 팀에서 API 복제본 2개와 PodDisruptionBudget을 적용했습니다.
 - **FoodiGuard**: 팀원과 함께 마이그레이션이 성공해야만 배포를 갱신하는 Jenkins 파이프라인과 Terraform 인프라 코드를 구성했고, 그중 콘솔에서 따로 관리하던 알림 정책을 Terraform 코드로 옮기는 일을 맡았습니다.
 - **NoDo**: Cloud Run(서버리스)에 FastAPI 백엔드를 배포하면서 서비스 계정 키 파일 없이 최소 권한으로 인증을 구성했습니다. k6로 운영 API에 80명 순차 입장 시험(p95 약 243ms)을 하고, 정원 카운터 문서 하나에 쓰기가 몰리는 구조를 찾아 카운터 샤딩을 개선안으로 정리했습니다.
-- **NoDo**: 인턴 이후 백엔드의 시작 검사(fail-closed)를 [Go CLI(`nodoctl`)](./Google%20Cloud%20기반%20수업%20운영%20플랫폼%20NoDo/tools/nodoctl)로 옮겨, 잘못된 GCP 프로젝트·Storage 버킷·CORS 설정을 배포 전에 막도록 했습니다. 백엔드와 판정이 같은지 테스트로 확인합니다.
+- **NoDo**: 인턴 이후 백엔드의 시작 검사(fail-closed)를 [Go CLI(`nodoctl`)](./Google%20Cloud%20기반%20수업%20운영%20플랫폼%20NoDo/tools/nodoctl)로 옮겨, 잘못된 GCP 프로젝트·Storage 버킷·CORS 설정을 배포 전에 막도록 했습니다. 24개 설정 상황에서 백엔드와 판정이 같은지 테스트로 확인합니다.
 
 ## 대표 프로젝트
 
@@ -18,7 +18,7 @@ Jenkins CI/CD, Terraform, Managed Prometheus 알림을 갖추고, 쓰이지 않�
 ### [Google Cloud 기반 수업 운영 플랫폼 NoDo](./Google%20Cloud%20기반%20수업%20운영%20플랫폼%20NoDo)
 React → FastAPI(Cloud Run) → Firestore·Cloud Storage·Vertex AI 구조로 만든 AI 수업 로드맵·실시간 강의 운영 플랫폼입니다.  
 권한, 개인정보, 용량 예약, 데이터 수명주기를 서버에서 일관되게 처리하도록 설계한 Google Cloud 산학 프로젝트입니다.  
-k6로 실제 운영 API에 80명 순차 입장 시험을 해 입장 API p95 약 243ms를 확인했고, 프론트엔드 504개·백엔드 456개 테스트가 통과합니다.
+k6로 실제 운영 API에 80명 순차 입장 시험을 해 입장 API p95 약 243ms를 확인했고, 프론트엔드 504개·백엔드 456개(기본 로컬 설정 기준) 테스트가 통과합니다.
 
 ### [LangGraph 기반 식단 추천 AI 에이전트](./LangGraph%20기반%20식단%20추천%20AI%20에이전트)
 LangGraph와 Gemini로 자연어 식단 요청을 해석하고, 약 4만 건의 식품 데이터에서 Python 로직으로 후보를 계산해 추천 근거와 함께 보여주는 AI 에이전트입니다.  
