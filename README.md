@@ -7,6 +7,7 @@
 - **FoodiGuard**: GKE에서 API 파드를 강제로 삭제하는 장애 실험으로 약 4초 정지를 확인해 기록했고, 이 결과를 바탕으로 팀에서 API 복제본 2개와 PodDisruptionBudget을 적용했습니다.
 - **FoodiGuard**: 팀원과 함께 마이그레이션이 성공해야만 배포를 갱신하는 Jenkins 파이프라인과 Terraform 인프라 코드를 구성했고, 그중 콘솔에서 따로 관리하던 알림 정책을 Terraform 코드로 옮기는 일을 맡았습니다.
 - **NoDo**: Cloud Run(서버리스)에 FastAPI 백엔드를 배포하면서 서비스 계정 키 파일 없이 최소 권한으로 인증을 구성했습니다. k6로 운영 API에 80명 순차 입장 시험(p95 약 243ms)을 하고, 정원 카운터 문서 하나에 쓰기가 몰리는 구조를 찾아 카운터 샤딩을 개선안으로 정리했습니다.
+- **NoDo**: 인턴 이후 백엔드의 시작 검사(fail-closed)를 [Go CLI(`nodoctl`)](./Google%20Cloud%20기반%20수업%20운영%20플랫폼%20NoDo/tools/nodoctl)로 옮겨, 잘못된 GCP 프로젝트·Storage 버킷·CORS 설정을 배포 전에 막도록 했습니다. 백엔드와 판정이 같은지 테스트로 확인합니다.
 
 ## 대표 프로젝트
 
@@ -42,6 +43,7 @@ LangGraph와 Gemini로 자연어 식단 요청을 해석하고, 약 4만 건의 
 - `C`, `C++`
 - `Java`, `JSP`
 - `Python`, `Jupyter Notebook`
+- `Go`
 - `R`
 - `Visual Studio`, `Bootstrap`
 
