@@ -133,6 +133,8 @@ FastAPI (Cloud Run)  ── 권한·수업 상태·용량 검증을 모두 서�
   - API 계약, Firestore 스키마, 역할·권한, 자원 경계, 배포 문서
 - `docs/DEVELOPER_GUIDE.md`
   - 실행 모드, 환경 변수, 로컬 실행 방법 (원본 저장소 README)
+- `tools/nodoctl/`
+  - 배포 전 설정 검사 Go CLI (인턴 이후 개인적으로 추가)
 
 ## 프로젝트 의미
 
